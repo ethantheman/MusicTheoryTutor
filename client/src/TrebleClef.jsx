@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Note from './Note.jsx';
 
 class TrebleClef extends React.Component {
 	constructor(props) {
@@ -14,6 +15,7 @@ class TrebleClef extends React.Component {
 				</div>
 				<div>
 					<div className="line" id="f6"><hr/></div>
+					<Note selectNote={this.props.selectNote}/>
 					<div className="space" id="e6"></div>
 					<div className="line" id="d6"><hr/></div>
 					<div className="space" id="c5"></div>

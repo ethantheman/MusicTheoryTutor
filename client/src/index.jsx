@@ -10,11 +10,18 @@ class App extends React.Component {
 		this.state = {
 
 		}
+		this.selectNote = this.selectNote.bind(this);
 	}
+
+	selectNote(e) {
+		e.preventDefault();
+		console.log('click');
+	}
+
 	render() {
 		return (
 		<div>
-			<GrandStaff/>
+			<GrandStaff selectNote={this.selectNote}/>
 		</div>
 		);
 	}
