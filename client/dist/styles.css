@@ -1,3 +1,25 @@
-/*
-Styles here...
-*/
+.line {
+	height: 4%;
+	width: 100%;
+}
+
+.space {
+	height: 4%;
+	width: 100%;
+}
+
+.trebleClef {
+	height: 16%;
+	position: absolute;
+	z-index: 1;
+	top: 9%;
+	left: 1%;
+}
+
+.bassClef {
+	height: 19%;
+	position: absolute;
+	z-index: 1;
+	top: 27.5%;
+	left: 1%;
+}
