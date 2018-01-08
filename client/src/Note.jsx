@@ -8,6 +8,7 @@ class Note extends React.Component {
 		super(props);
 		this.state = {
 			selected: false,
+			currentIndex: 19, // this should eventually be set to default at middle C (index 17)
 			note: "D4" // string will determine which div to render note on. if selected, should listen for up/down key to change note and re-render accordingly.
 		}
 		this.select = this.select.bind(this);
@@ -15,16 +16,17 @@ class Note extends React.Component {
 	}
 
 	getNextNote(direction) {
-		let currentIndex = -1;;
-		this.props.chromatic.forEach((tuple, i) => {
-			if ( tuple.includes(this.state.note) ) {
-				currentIndex = i;
-			}
-		});
-		if ( direction === 'up' && this.props.chromatic[currentIndex + 1] ) {
-			return this.props.chromatic[currentIndex + 1][0]; // first el in tuple is the ascending enharmonic name.
-		} else if (direction === 'down' && this.props.chromatic[currentIndex - 1]) {
-			return this.props.chromatic[currentIndex - 1][1]; // second el in tuple is the descending enharmonic name.
+		let c = this.state.currentIndex;
+		if ( direction === 'up' && this.props.chromatic[c + 1] ) {
+			this.setState({
+				currentIndex: c + 1
+			});
+			return this.props.chromatic[c + 1][0]; // first el in tuple is the ascending enharmonic name.
+		} else if (direction === 'down' && this.props.chromatic[c - 1]) {
+			this.setState({
+				currentIndex: c - 1
+			})
+			return this.props.chromatic[c - 1][1]; // second el in tuple is the descending enharmonic name.
 		}
 	}
 
