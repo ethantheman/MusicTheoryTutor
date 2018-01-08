@@ -7,24 +7,37 @@ class Note extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selected: false
+			selected: false,
+			note: "d6" // string will determine which div to render note on. if selected, should listen for up/down key to change note and re-render accordingly.
 		}
 		this.select = this.select.bind(this);
 	}
 
 	select(e) {
-		// toggle selected - if selected, color should be red, else black
 		e.preventDefault();
+		// toggle selected - if selected, color should be red, else black
 		let s = this.state.selected;
 		this.setState({
 			selected: !s
 		});
-		console.log(this.state.selected);
+	}
+
+	componentDidMount() {
+		document.addEventListener("keydown", (e) => {
+			// only register up and down arrow keys if note is selected.
+			if ( this.state.selected ) {
+				if ( e.which === 38 ) {
+					console.log('move up a half step!');
+				} else if ( e.which === 40 ) {
+					console.log('move down a half step!');
+				}
+			}
+		})
 	}
 
 	render() {
 		return (
-		<div onClick={this.select} className={this.state.selected ? 'note' : 'activeNote'}></div>
+		<div onClick={this.select} className={!this.state.selected ? 'note' : 'activeNote'}></div>
 		);
 	}
 }
