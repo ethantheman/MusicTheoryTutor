@@ -32,6 +32,15 @@
   left: 50%;
 }
 
+.activeNote {
+	position: absolute;
+	width: 50px;
+  height: 25px;
+  background: red;
+  border-radius: 50%;
+  left: 50%;
+}
+
 h1 {
 	text-align: center;
 }
