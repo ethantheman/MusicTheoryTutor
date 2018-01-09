@@ -72,6 +72,17 @@
 	visibility: hidden;
 }
 
+.accidental {
+	height: 14%;
+	position: absolute;
+	left: 50%;
+	z-index: 0;
+}
+
+.accidentalContainer {
+
+}
+
 h1 {
 	text-align: center;
 }
