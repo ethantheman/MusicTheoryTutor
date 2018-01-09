@@ -24,8 +24,8 @@ class TrebleClef extends React.Component {
 					<div className="line" id="g4"><hr/></div>
 					<div className="space" id="f4"></div>
 					<div className="line" id="e4"><hr/></div>
-					<div className="space" id="d4">D</div>
-					<div className="ledger-line" id="c4">C</div>
+					<div className="space" id="d4"><hr style={{"visibility": "hidden"}}/></div>
+					<div className="ledger-line" id="c4"><hr id="middle-C"/></div>
 				</div>
 			</div>
 			);

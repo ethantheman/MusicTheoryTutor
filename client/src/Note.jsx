@@ -10,7 +10,6 @@ class Note extends React.Component {
 		this.state = {
 			selected: false,
 			currentIndex: 19, // this should eventually be set to default at middle C (index 17)
-			note: "D4" // string will determine which div to render note on. if selected, should listen for up/down key to change note and re-render accordingly.
 		}
 		this.select = this.select.bind(this);
 		this.getNextNote = this.getNextNote.bind(this);

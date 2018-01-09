@@ -13,14 +13,14 @@
 	position: absolute;
 	z-index: 1;
 	top: 9%;
-	left: 1%;
+	left: 2%;
 }
 
 .bassClef {
-	height: 19%;
+	height: 18%;
 	position: absolute;
 	z-index: 1;
-	top: 27.3%;
+	top: 24%;
 }
 
 .note {
@@ -28,6 +28,7 @@
 	width: 3.5%;
 	height: 2.5%;
 	background: #000000;
+	z-index: 1;
 	border-radius: 50%;
 	left: 50%;
 	top: 10.4%;
@@ -37,6 +38,7 @@
 	position: absolute;	
 	width: 3.5%;
 	height: 2.5%;
+	z-index: 1;
 	background: red;
 	border-radius: 50%;
 	left: 50%;
@@ -57,6 +59,17 @@
   /*transform: translateY(-50%);*/
   font-weight: bold;
   font-size: 30px;
+}
+
+#middle-C {
+	position: absolute;
+	width: 50px;
+	left: 50%;
+}
+
+#space {
+	height: 4%;
+	visibility: hidden;
 }
 
 h1 {

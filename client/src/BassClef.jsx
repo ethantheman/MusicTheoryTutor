@@ -13,7 +13,7 @@ class BassClef extends React.Component {
 					<img src="./images/bass.png" className="bassClef" alt=""/>
 				</div>
 				<div>
-					<div className="space" id="b3">B</div>
+					<div className="space" id="b3"><hr id="space"/></div>
 					<div className="line" id="a3"><hr/></div>
 					<div className="space" id="g3"></div>
 					<div className="line" id="f3"><hr/></div>

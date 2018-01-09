@@ -1,1 +1,15 @@
-- move note up/down in increments of 4%
+1. Accidental component:
+	- create accidental component that conditionally renders a # or b (grab png's) to the left of the note component.
+	- write function to determine whether accidental should display #, b or nothing.
+	- test accidental rendering - make sure it matches the note name display when note is changed.
+2. Calibrate Note movement
+	- calculate spacing between lines
+	- note should move one 'step' when its letter changes (i.e., D -> Db is not a step, but Db -> C is)
+3. Add new note onClick in the location where you click
+	- refactor any functions that use the app.state.notes array to make sure they're referring to the right note.
+	- default new note to selected
+	- Add new note name display component when a new note is created
+4. Create an IntervalDisplay component to display the interval between two notes
+	- write the function that calculates # of half-steps using the chromatic scale and then maps to appropriate interval
+		- make sure to handle the difference between Augmented 4th and Diminished 5th depending on spelling (i.e. C -> F# vs. C -> Gb).
+----------------------------------------------------- MVP --------------------------------------------------------------------------
