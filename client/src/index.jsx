@@ -12,6 +12,11 @@ class App extends React.Component {
 			selectedNote: "D4" // may need to refactor note selection to keep track of this in parent component...
 		}
 		this.changeNote=this.changeNote.bind(this);
+		this.getCursorPosition=this.getCursorPosition.bind(this);
+	}
+
+	getCursorPosition(e) {
+		console.log('click! x: ', e.pageX, 'y: ', e.pageY);
 	}
 
 	changeNote(newNote) {
@@ -28,7 +33,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-		<div>
+		<div onClick={this.getCursorPosition}>
 			<GrandStaff changeNote={this.changeNote}/>
 			<div className="noteNameContainer">
 				<div className="noteName">{this.state.notes[0]}</div>

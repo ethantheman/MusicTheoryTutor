@@ -24,21 +24,23 @@
 }
 
 .note {
-	position: absolute;
-	width: 50px;
-  height: 25px;
-  background: #000000;
-  border-radius: 50%;
-  left: 50%;
+	position: absolute;	
+	width: 3.5%;
+	height: 2.5%;
+	background: #000000;
+	border-radius: 50%;
+	left: 50%;
+	top: 10.4%;
 }
 
 .activeNote {
-	position: absolute;
-	width: 50px;
-  height: 25px;
-  background: red;
-  border-radius: 50%;
-  left: 50%;
+	position: absolute;	
+	width: 3.5%;
+	height: 2.5%;
+	background: red;
+	border-radius: 50%;
+	left: 50%;
+	top: 10.4%;
 }
 
 .noteNameContainer {

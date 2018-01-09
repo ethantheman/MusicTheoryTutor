@@ -14,6 +14,21 @@ class Note extends React.Component {
 		}
 		this.select = this.select.bind(this);
 		this.getNextNote = this.getNextNote.bind(this);
+		this.moveNote = this.moveNote.bind(this);
+	}
+
+	moveNote(direction) {
+		let height = parseFloat($('.activeNote').css("top").slice(0, -2));
+		console.log(height);
+		if ( direction === "up" ) {
+			height = height - 10;
+			$('.activeNote').css("top", height.toString()+"px");
+		}
+		if ( direction === "down" ) {
+			height = height + 10;
+			$('.activeNote').css("top", height.toString()+"px");
+		}
+		
 	}
 
 	getNextNote(direction) {
@@ -22,11 +37,13 @@ class Note extends React.Component {
 			this.setState({
 				currentIndex: c + 1
 			});
+			this.moveNote("up");
 			return chromatic[c + 1][0]; // first el in tuple is the ascending enharmonic name.
 		} else if (direction === 'down' && chromatic[c - 1]) {
 			this.setState({
 				currentIndex: c - 1
-			})
+			});
+			this.moveNote("down");
 			return chromatic[c - 1][1]; // second el in tuple is the descending enharmonic name.
 		} else {
 			return null;
@@ -72,7 +89,9 @@ class Note extends React.Component {
 
 	render() {
 		return (
-		<div onClick={this.select} className={!this.state.selected ? 'note' : 'activeNote'}></div>
+		<div>
+			<div onClick={this.select} className={!this.state.selected ? 'note' : 'activeNote'}></div>
+		</div>
 		);
 	}
 }

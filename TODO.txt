@@ -1,0 +1,1 @@
+- move note up/down in increments of 4%
