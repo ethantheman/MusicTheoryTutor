@@ -41,6 +41,22 @@
   left: 50%;
 }
 
+.noteNameContainer {
+		height: 50px;
+		width: 75px;
+		border: 1px solid black;
+}
+
+.noteName {
+	width: 50%;
+	margin: 0 auto;
+  position: relative;
+  /*top: 50%;*/
+  /*transform: translateY(-50%);*/
+  font-weight: bold;
+  font-size: 30px;
+}
+
 h1 {
 	text-align: center;
 }

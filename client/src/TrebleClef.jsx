@@ -15,7 +15,7 @@ class TrebleClef extends React.Component {
 				</div>
 				<div>
 					<div className="line" id="f6"><hr/></div>
-					<Note chromatic={this.props.chromatic}/>
+					<Note changeNote={this.props.changeNote}/>
 					<div className="space" id="e6"></div>
 					<div className="line" id="d6"><hr/></div>
 					<div className="space" id="c5"></div>

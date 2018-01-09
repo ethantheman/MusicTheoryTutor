@@ -15,7 +15,7 @@ class GrandStaff extends React.Component {
 					<h1>Learn Your Intervals</h1>
 				</div>
 				<div>
-					<TrebleClef chromatic={this.props.chromatic}/>
+					<TrebleClef changeNote={this.props.changeNote}/>
 					<BassClef/>
 				</div>
 			</div>

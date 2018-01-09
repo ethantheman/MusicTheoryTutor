@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
+let chromatic = require('./chromatic.js').chromatic;
 
 class Note extends React.Component {
 	constructor(props) {
@@ -17,16 +18,18 @@ class Note extends React.Component {
 
 	getNextNote(direction) {
 		let c = this.state.currentIndex;
-		if ( direction === 'up' && this.props.chromatic[c + 1] ) {
+		if ( direction === 'up' && chromatic[c + 1] ) {
 			this.setState({
 				currentIndex: c + 1
 			});
-			return this.props.chromatic[c + 1][0]; // first el in tuple is the ascending enharmonic name.
-		} else if (direction === 'down' && this.props.chromatic[c - 1]) {
+			return chromatic[c + 1][0]; // first el in tuple is the ascending enharmonic name.
+		} else if (direction === 'down' && chromatic[c - 1]) {
 			this.setState({
 				currentIndex: c - 1
 			})
-			return this.props.chromatic[c - 1][1]; // second el in tuple is the descending enharmonic name.
+			return chromatic[c - 1][1]; // second el in tuple is the descending enharmonic name.
+		} else {
+			return null;
 		}
 	}
 
@@ -44,13 +47,19 @@ class Note extends React.Component {
 			// only register up and down arrow keys if note is selected.
 			if ( this.state.selected ) {
 				let n = this.state.note;
-				console.log(n);
+				// console.log(n);
 				if ( e.which === 38 ) {
-					console.log('move up a half step!');
+					// console.log('move up a half step!');
 					var nextNote = this.getNextNote('up');
+					if ( nextNote !== null ) {
+						this.props.changeNote(nextNote);
+					}
 				} else if ( e.which === 40 ) {
-					console.log('move down a half step!');
+					// console.log('move down a half step!');
 					var nextNote = this.getNextNote('down');
+					if ( nextNote !== null ) {
+						this.props.changeNote(nextNote);
+					}
 				}
 					if ( nextNote !== undefined ) {
 						this.setState({
