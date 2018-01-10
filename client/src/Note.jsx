@@ -10,8 +10,8 @@ class Note extends React.Component {
 		super(props);
 		this.state = {
 			selected: false,
-			currentIndex: 19, // this should eventually be set to default at middle C (index 17)
-			currentNote: "D4" // need to keep track of this in order to update accidental.
+			currentIndex: 17, // this should eventually be set to default at middle C (index 17)
+			currentNote: "C4" // need to keep track of this in order to update accidental.
 		}
 		this.select = this.select.bind(this);
 		this.getNextNote = this.getNextNote.bind(this);
@@ -31,18 +31,18 @@ class Note extends React.Component {
 	}
 
 	moveNote(direction) {
-		// this function is now working as far as moving the note and the accidental at the same time and keeping them in the same div.
-		// now realizing that the notes should be appended to the GrandStaff, not the Treble Clef or Bass Clef. Might be best
-		// to remove the treble/bass clef components all together and just use grandstaff.
 
 		let $child = $('.noteAndAccidentalContainer');
 		let $parent = $child.parent();
+		console.log('current parent: ', $parent.attr('id'));
 		if ( direction === "up" ) {
 			// get div above $parent
 			let $above = $parent.prev();
 			// remove note/accidental from $parent and append to $below
 			$child.remove();
 			$above.append($child);
+			console.log('new parent: ', $above.attr('id'));
+
 		}
 		if ( direction === "down" ) {
 			// get div below $parent
@@ -50,19 +50,25 @@ class Note extends React.Component {
 			// remove note/accidental from $parent and append to $below
 			$child.remove();
 			$below.append($child);
+			console.log('new parent: ', $below.attr('id'));
+
 		}
 		
 	}
 
 	getNextNote(direction) {
 		let c = this.state.currentIndex;
+		let n = this.state.currentNote;
 		if ( direction === 'up' && chromatic[c + 1] ) {
 			let newNote = chromatic[c + 1][0];
 			this.setState({
 				currentIndex: c + 1,
 				currentNote: newNote
 			});
-			this.moveNote("up"); // NOTE FOR LATER: SHOULD ONLY MOVE IF THE LETTER CHANGES
+			if ( n[0] !== newNote[0] ) {
+				// note letter changed - note needs to move
+				this.moveNote("up");
+			}
 			return chromatic[c + 1][0]; // first el in tuple is the ascending enharmonic name.
 		} else if (direction === 'down' && chromatic[c - 1]) {
 			let newNote = chromatic[c - 1][1];
@@ -70,7 +76,10 @@ class Note extends React.Component {
 				currentIndex: c - 1,
 				currentNote: newNote
 			});
-			this.moveNote("down"); // NOTE FOR LATER: SHOULD ONLY MOVE IF THE LETTER CHANGES.
+			if ( n[0] !== newNote[0] ) {
+				// note letter changed - note needs to move.
+				this.moveNote("down");
+			}
 			return chromatic[c - 1][1]; // second el in tuple is the descending enharmonic name.
 		} else {
 			return null;

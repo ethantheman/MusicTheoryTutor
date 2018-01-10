@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TrebleClef from './TrebleClef.jsx';
-import BassClef from './BassClef.jsx';
+import Note from './Note.jsx';
 
 class GrandStaff extends React.Component {
 	constructor(props) {
@@ -12,11 +11,32 @@ class GrandStaff extends React.Component {
 		return (
 			<div>
 				<div>
-					<h1>Learn Your Intervals</h1>
+					<img src="./images/bass.png" className="bassClef" alt=""/>
+					<img src="./images/treble.png" className="trebleClef" alt=""/>
 				</div>
 				<div>
-					<TrebleClef changeNote={this.props.changeNote}/>
-					<BassClef/>
+					<div className="space" id="g5"></div>
+					<div className="line" id="f5"><hr/></div>
+					<div className="space" id="e5"></div>
+					<div className="line" id="d5"><hr/></div>
+					<div className="space" id="c5"></div>
+					<div className="line" id="b4"><hr/></div>
+					<div className="space" id="a4"></div>
+					<div className="line" id="g4"><hr/></div>
+					<div className="space" id="f4"></div>
+					<div className="line" id="e4"><hr/></div>
+					<div className="space" id="d4"><hr id="space"/></div>
+					<div className="ledger-line" id="c4"><hr id="middle-C"/><Note changeNote={this.props.changeNote}/></div>
+					<div className="space" id="b3"><hr id="space"/></div>
+					<div className="line" id="a3"><hr/></div>
+					<div className="space" id="g3"></div>
+					<div className="line" id="f3"><hr/></div>
+					<div className="space" id="e3"></div>
+					<div className="line" id="d3"><hr/></div>
+					<div className="space" id="c3"></div>
+					<div className="line" id="b2"><hr/></div>
+					<div className="space" id="a2"></div>
+					<div className="line" id="g2"><hr/></div>
 				</div>
 			</div>
 			);
