@@ -10,7 +10,7 @@ class Note extends React.Component {
 		super(props);
 		this.state = {
 			selected: false,
-			currentIndex: 17, // this should eventually be set to default at middle C (index 17)
+			currentIndex: 19, // default set to middle C (19 / C4)
 			currentNote: "C4" // need to keep track of this in order to update accidental.
 		}
 		this.select = this.select.bind(this);
@@ -40,18 +40,16 @@ class Note extends React.Component {
 			let $above = $parent.prev();
 			// remove note/accidental from $parent and append to $below
 			$child.remove();
-			$above.append($child);
+			$above.prepend($child);
 			console.log('new parent: ', $above.attr('id'));
-
 		}
 		if ( direction === "down" ) {
 			// get div below $parent
 			let $below = $parent.next();
 			// remove note/accidental from $parent and append to $below
 			$child.remove();
-			$below.append($child);
+			$below.prepend($child);
 			console.log('new parent: ', $below.attr('id'));
-
 		}
 		
 	}
