@@ -1,11 +1,13 @@
 .line {
 	height: 4%;
 	width: 100%;
+	text-align:center;
 }
 
 .space {
 	height: 4%;
 	width: 100%;
+	text-align: center;
 }
 
 .trebleClef {
@@ -25,24 +27,26 @@
 
 .note {
 	position: absolute;	
-	width: 3.5%;
+	width: 3%;
 	height: 2.5%;
 	background: #000000;
 	z-index: 1;
 	border-radius: 50%;
 	left: 50%;
-	top: 10.4%;
+	display:inline-block;
+	/*top: 10.4%;*/
 }
 
 .activeNote {
 	position: absolute;	
-	width: 3.5%;
+	width: 3%;
 	height: 2.5%;
 	z-index: 1;
 	background: red;
 	border-radius: 50%;
 	left: 50%;
-	top: 10.4%;
+	display: inline-block;
+	/*top: 10.4%;*/
 }
 
 .noteNameContainer {
@@ -55,8 +59,6 @@
 	width: 50%;
 	margin: 0 auto;
   position: relative;
-  /*top: 50%;*/
-  /*transform: translateY(-50%);*/
   font-weight: bold;
   font-size: 30px;
 }
@@ -73,14 +75,23 @@
 }
 
 .accidental {
-	height: 14%;
-	position: absolute;
-	left: 50%;
 	z-index: 0;
+	/*display: inline;*/
+	width: 100%;
+	height: auto;
 }
 
 .accidentalContainer {
+	height: 100px;
+	width: 100px;
+	display: inline-block;
+	/*left: 50%;*/
+	/*display: inline;*/
+}
 
+.noteAndAccidentalContainer {
+	text-align: center;
+	left: 50%;
 }
 
 h1 {
