@@ -10,8 +10,8 @@ class Note extends React.Component {
 		super(props);
 		this.state = {
 			selected: false,
-			currentIndex: 19, // default set to middle C (19 / C4)
-			currentNote: "C4" // need to keep track of this in order to update accidental.
+			chromaticIndex: 20,
+			currentNote: this.props.name
 		}
 		this.select = this.select.bind(this);
 		this.getNextNote = this.getNextNote.bind(this);
@@ -38,9 +38,9 @@ class Note extends React.Component {
 		if ( direction === "up" ) {
 			// get div above $parent
 			let $above = $parent.prev();
-			// remove note/accidental from $parent and append to $below
+			// remove note/accidental from $parent and append to $above
 			$child.remove();
-			$above.prepend($child);
+			$above.append($child);
 			// console.log('new parent: ', $above.attr('id'));
 		}
 		if ( direction === "down" ) {
@@ -48,7 +48,7 @@ class Note extends React.Component {
 			let $below = $parent.next();
 			// remove note/accidental from $parent and append to $below
 			$child.remove();
-			$below.prepend($child);
+			$below.append($child);
 			// console.log('new parent: ', $below.attr('id'));
 		}
 		
@@ -61,12 +61,12 @@ class Note extends React.Component {
 		// if the next note is a sharp or flat version of the same letter (i.e. D -> Db), it won't
 		// trigger the note to move. 
 
-		let c = this.state.currentIndex;
+		let c = this.state.chromaticIndex;
 		let n = this.state.currentNote;
 		if ( direction === 'up' && chromatic[c + 1] ) {
 			let newNote = chromatic[c + 1][0]; // 0th index of tuple is the 'ascending' enharmonic spelling of the note.
 			this.setState({
-				currentIndex: c + 1,
+				chromaticIndex: c + 1,
 				currentNote: newNote
 			});
 			if ( n[0] !== newNote[0] ) {
@@ -77,7 +77,7 @@ class Note extends React.Component {
 		} else if (direction === 'down' && chromatic[c - 1]) {
 			let newNote = chromatic[c - 1][1]; // index 1 of tuple is the 'descending' enharmonic spelling of the note.
 			this.setState({
-				currentIndex: c - 1,
+				chromaticIndex: c - 1,
 				currentNote: newNote
 			});
 			if ( n[0] !== newNote[0] ) {
@@ -96,6 +96,13 @@ class Note extends React.Component {
 		let s = this.state.selected;
 		this.setState({
 			selected: !s
+		}, () => {
+			// call function from index.jsx to update which note is selected in app state
+			if ( this.state.selected ) {
+				this.props.changeSelection(this.state.currentNote);
+			} else {
+				this.props.changeSelection(null);
+			}
 		});
 	}
 

@@ -20,4 +20,4 @@
 6. Deploy!
 ----------------------------------------------------- MVP --------------------------------------------------------------------------
 7. allow for more than three notes on the staff and refactor function to name the chord with 7ths or additional extensions
-8. create a quiz mode to 
+8. create a quiz mode
