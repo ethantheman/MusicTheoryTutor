@@ -16,21 +16,22 @@
 	width: 100%;
 	margin-top: 1%;
 }
-/*
+
 .trebleClef {
-	height: 16%;
+	height: 24vh;
 	position: absolute;
 	z-index: 1;
-	top: 9%;
-	left: 2%;
+	top: 10vh;
+	left: 1%;
 }
 
 .bassClef {
-	height: 18%;
+	height: 14vh;
 	position: absolute;
 	z-index: 1;
-	top: 24%;
-}*/
+	top: 38.5vh;
+	left: 1%;
+}
 
 .note {
 	position: absolute;	
