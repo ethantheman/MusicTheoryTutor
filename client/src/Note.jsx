@@ -20,7 +20,7 @@ class Note extends React.Component {
 	}
 
 	getAccidental(noteName) {
-		// look for a # or b in the note name at index 1
+		// look for '#' or 'b' in the note name at index 1
 		if ( noteName[1] === "#" ) {
 			return "sharp";
 		} else if ( noteName[1] === "b" ) {
@@ -31,33 +31,34 @@ class Note extends React.Component {
 	}
 
 	moveNote(direction) {
-		// let $child = $('.noteAndAccidentalContainer');
-		// let $parent = $child.parent();
+		let $child = $('.noteAndAccidentalContainer');
+		let $parent = $child.parent();
 		if ( direction === "up" ) {
-			
-			// // get div above $parent
-			// let $above = $parent.prev();
-			// // remove note/accidental from $parent and append to $above
-			// $child.remove();
-			// $above.append($child);
+			// get div above $parent
+			let $above = $parent.prev();
+			// remove note/accidental from $parent and append to $above
+			$child.remove();
+			$above.append($child);
 		}
 		if ( direction === "down" ) {
-			// // get div below $parent
-			// let $below = $parent.next();
-			// // remove note/accidental from $parent and append to $below
-			// $child.remove();
-			// $below.append($child);
+			// get div below $parent
+			let $below = $parent.next();
+			// remove note/accidental from $parent and append to $below
+			$child.remove();
+			$below.append($child);
 		}
 	}
 
 	getNextNote(direction) {
+		//////////////////////////////////////////////////////////////////////////////////////////
 		// this function looks for the next note in the direction user clicks (up or down).
+		//
 		// if the next note has a different letter name (i.e. D# -> E ), it will trigger the note
 		// to move to the next div.
+		//
 		// if the next note is a sharp or flat version of the same letter (i.e. D -> Db), it won't
 		// trigger the note to move. 
-
-
+		//////////////////////////////////////////////////////////////////////////////////////////
 		let c = this.state.currentIndex;
 		let n = this.state.name;
 		if ( direction === 'up' && chromatic[c + 1] ) {
@@ -96,9 +97,9 @@ class Note extends React.Component {
 			}, () => {
 				// call function from index.jsx to update which note is selected in app state
 				if ( this.state.selected ) {
-					this.props.changeSelection(this.state.currentNote);
+					this.props.changeSelection(this.props.index, true);
 				} else {
-					this.props.changeSelection(null);
+					this.props.changeSelection(this.props.index, false);
 				}
 			});
 	}
@@ -107,15 +108,13 @@ class Note extends React.Component {
 		///////////////////////////////////////////////////
 		// append note component to its initial parent div:
 		///////////////////////////////////////////////////
-		
-		let n = this.props.name.toLowerCase();
 
-		// handle accidentals:
-		if ( n.length > 2 ) {
+		let n = this.props.name.toLowerCase();
+		if ( n.length > 2 ) { // if note name contains an accidental
 			n = n[0] + n[2]; // remove the accidental, which will always be at index 1 in the string.
 		}
-		let $parent = $('#' + n);
-		let $child = $('#'+this.props.index);
+		let $parent = $('#' + n); // the div in grandStaff.jsx corresponding with name of note.
+		let $child = $('#'+this.props.index); // the div that contains this note and its accidental.
 		$parent.append($child);
 
 		//////////////////////////////////////////////////

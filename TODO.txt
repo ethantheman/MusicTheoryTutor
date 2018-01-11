@@ -2,22 +2,20 @@
 	- update the note at the index when that note is selected
 	- when multiple notes are on the staff, selecting one note should only affect that note.
 	- add a new note name display for each note on the staff
-2. Render notes by mapping the app.state.notes
-	- write a function to append each note to the appropriate div
-3. Add new note onClick in the location where you click
+2. Add new note onClick in the location where you click
 	- default the new note to selected
 	- refactor any functions that use the app.state.notes array to make sure they're referring to the right note.
 	- default new note to selected
 	- Add new note name display component when a new note is created
-4. Create an IntervalDisplay component to display the interval between two notes
+3. Create an IntervalDisplay component to display the interval between two notes
 	- write the function that calculates # of half-steps using the chromatic scale and then maps to appropriate interval
 		- make sure to handle the difference between Augmented 4th and Diminished 5th depending on spelling (i.e. C -> F# vs. C -> Gb).
 	- when three notes are on the staff, there should be three interval displays (eg. C-E, E-G, and C-G)
 	- write a function to convert the intervals into chord names/inversions and display the chord name when three notes are present.
-5. Implement a database using PostGres or firebase to store chords in a list
+4. Implement a database using PostGres or firebase to store chords in a list
 	- clicking on a list entry should render the chord to the grand staff
 	- updating the chord should alter the chord at that list entry
-6. Deploy!
+5. Deploy!
 ----------------------------------------------------- MVP --------------------------------------------------------------------------
 7. allow for more than three notes on the staff and refactor function to name the chord with 7ths or additional extensions
 8. create a quiz mode

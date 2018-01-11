@@ -8,8 +8,8 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: ["C4", "F#4", "Eb5", "G#2", "Ab3"], // addNote button will append a new note to this array. will need some way to distinguish notes from each other...maybe change this to an object?
-			selectedNote: "C4" // may need to refactor note selection to keep track of this in parent component...
+			notes: ["G2", "F3", "Ab3", "E4", "B4"], // should initialize as empty array, use these for testing...
+			selectedNotes: [] // initialize as empty array
 		}
 		this.changeNote=this.changeNote.bind(this);
 		this.getCursorPosition=this.getCursorPosition.bind(this);
@@ -25,18 +25,35 @@ class App extends React.Component {
 	// addNote(newNote) {
 	// 	// eventually, get newNote using getCursorPosition
 	// 	let oldNotes = this.state.notes;
-	// 	oldNotes.push("C4");
+	// 	oldNotes.push(newNote);
 	// 	this.setState({
 	// 		notes: oldNotes
 	// 	});
 	// }
 
-	changeSelection(name) {
-		let i = this.state.notes.indexOf(name);
-		console.log('changing selection!', i);
-		this.setState({
-			selectedNote: i === -1 ? null : i
-		});
+	changeSelection(index, bool) {
+		if ( bool ) {
+			console.log('adding note to selectedNotes.');
+			let s = this.state.selectedNotes;
+			s.push(this.state.notes[index]);
+			this.setState({
+				selectedNotes: s
+			}, () => {
+				console.log(this.state.selectedNotes);
+			});
+		} else {
+			console.log('removing note from selectedNotes.');
+			let s = this.state.selectedNotes;
+			let x = [];
+			s.forEach(el => {
+				el === this.state.notes[index] ? null : x.push(el);
+			})
+			this.setState({
+				selectedNotes: x
+			}, () => {
+				console.log(this.state.selectedNotes);
+			});
+		}
 	}
 
 	changeNote(newNote, index) {
@@ -50,13 +67,15 @@ class App extends React.Component {
 		return (
 		<div onClick={this.getCursorPosition}>
 			<div>
-				<h1>Interval Buddy</h1>
+				<h1>Ethan's Chord Builder</h1>
 			</div>
 			<br/>
-			<GrandStaff changeNote={this.changeNote} notes={this.state.notes} changeSelection={this.changeSelection} selectedNote={this.state.selectedNote}/>
-			<div className="noteNameContainer">
-				<div className="noteName">{this.state.notes[0]}</div>
-			</div>
+			<GrandStaff notes={this.state.notes} changeNote={this.changeNote} changeSelection={this.changeSelection} selectedNotes={this.state.selectedNotes}/>
+			{this.state.notes.map((note, i) => {
+				return (<div className="noteNameContainer" key={i}>
+									<div className="noteName">{note}</div>
+								</div>)
+			})}
 		</div>
 		);
 	}
