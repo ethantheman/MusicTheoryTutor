@@ -10,7 +10,7 @@ class Note extends React.Component {
 		super(props);
 		this.state = {
 			selected: false,
-			chromaticIndex: 20,
+			chromaticIndex: 19,
 			currentNote: this.props.name
 		}
 		this.select = this.select.bind(this);
@@ -31,27 +31,23 @@ class Note extends React.Component {
 	}
 
 	moveNote(direction) {
-
-		let $child = $('.noteAndAccidentalContainer');
-		let $parent = $child.parent();
-		// console.log('current parent: ', $parent.attr('id'));
+		// let $child = $('.noteAndAccidentalContainer');
+		// let $parent = $child.parent();
 		if ( direction === "up" ) {
-			// get div above $parent
-			let $above = $parent.prev();
-			// remove note/accidental from $parent and append to $above
-			$child.remove();
-			$above.append($child);
-			// console.log('new parent: ', $above.attr('id'));
+			
+			// // get div above $parent
+			// let $above = $parent.prev();
+			// // remove note/accidental from $parent and append to $above
+			// $child.remove();
+			// $above.append($child);
 		}
 		if ( direction === "down" ) {
-			// get div below $parent
-			let $below = $parent.next();
-			// remove note/accidental from $parent and append to $below
-			$child.remove();
-			$below.append($child);
-			// console.log('new parent: ', $below.attr('id'));
+			// // get div below $parent
+			// let $below = $parent.next();
+			// // remove note/accidental from $parent and append to $below
+			// $child.remove();
+			// $below.append($child);
 		}
-		
 	}
 
 	getNextNote(direction) {
@@ -91,19 +87,19 @@ class Note extends React.Component {
 	}
 
 	select(e) {
-		e.preventDefault();
-		// toggle selected - if selected, color should be red, else black
-		let s = this.state.selected;
-		this.setState({
-			selected: !s
-		}, () => {
-			// call function from index.jsx to update which note is selected in app state
-			if ( this.state.selected ) {
-				this.props.changeSelection(this.state.currentNote);
-			} else {
-				this.props.changeSelection(null);
-			}
-		});
+			e.preventDefault();
+			// toggle selected - if selected, color should be red, else black
+			let s = this.state.selected;
+			this.setState({
+				selected: !s
+			}, () => {
+				// call function from index.jsx to update which note is selected in app state
+				if ( this.state.selected ) {
+					this.props.changeSelection(this.state.currentNote);
+				} else {
+					this.props.changeSelection(null);
+				}
+			});
 	}
 
 	componentDidMount() {

@@ -6,31 +6,20 @@ import $ from 'jquery';
 class GrandStaff extends React.Component {
 	constructor(props) {
 		super(props);
-		// this.mapNotes=this.mapNotes.bind(this);
 		this.checkNote=this.checkNote.bind(this);
 	}
 
-	// mapNotes() {
-	// 	// <Note changeNote={this.props.changeNote} changeSelection={this.props.changeSelection}/>
-	// 	// use $ to get the div each note in this.props.notes should be appended to.
-	// 	this.props.notes.map(note => {
-	// 		// console.log(note.toLowerCase());
-	// 		let $note = `<Note name={note.toLowerCase()} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection}/>`;
-	// 		let $parent = $('#'+note.toLowerCase());
-	// 		$parent.append($note);
-	// 		console.log($parent);
-	// 		return $parent;
-	// 	});
-	// }
 	checkNote(letter) {
+		// EDGE CASE TO WORK OUT LATER - WHAT IF TWO OF THE SAME NOTE ARE IN NOTES ARRAY?
+
 		let sharp = letter[0] + '#' + letter[1];
 		let natural = letter;
 		let flat = letter[0] + 'b' + letter[1];
 		
 		// check if any version of note (sharp, natural or flat) is in notes array, if so render a Note object.
-		return this.props.notes.includes(natural) ? (<Note name={natural} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection}/>) 
-		: this.props.notes.includes(sharp) ? (<Note name={sharp} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection}/>)
-		: this.props.notes.includes(flat) ? (<Note name={flat} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection}/>)
+		return this.props.notes.includes(natural) ? (<Note name={natural} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>) 
+		: this.props.notes.includes(sharp) ? (<Note name={sharp} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
+		: this.props.notes.includes(flat) ? (<Note name={flat} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
 		: null;
 	}
 

@@ -8,7 +8,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: ["C#4", "G4"], // addNote button will append a new note to this array. will need some way to distinguish notes from each other...maybe change this to an object?
+			notes: ["C4"], // addNote button will append a new note to this array. will need some way to distinguish notes from each other...maybe change this to an object?
 			selectedNote: null
 		}
 		this.changeNote=this.changeNote.bind(this);
@@ -32,14 +32,15 @@ class App extends React.Component {
 	// }
 
 	changeSelection(name) {
-		console.log('changing selection!');
 		let i = this.state.notes.indexOf(name);
+		console.log('changing selection!', i);
 		this.setState({
 			selectedNote: i === -1 ? null : i
 		});
 	}
 
 	changeNote(newNote, index) {
+		console.log('changing note');
 		this.setState({
 			notes: [newNote]
 		});
@@ -52,7 +53,7 @@ class App extends React.Component {
 				<h1>Interval Buddy</h1>
 			</div>
 			<br/>
-			<GrandStaff changeNote={this.changeNote} notes={this.state.notes} changeSelection={this.changeSelection}/>
+			<GrandStaff changeNote={this.changeNote} notes={this.state.notes} changeSelection={this.changeSelection} selectedNote={this.state.selectedNote}/>
 			<div className="noteNameContainer">
 				<div className="noteName">{this.state.notes[0]}</div>
 			</div>
