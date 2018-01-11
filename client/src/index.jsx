@@ -8,7 +8,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: ["G2", "F3", "Ab3", "E4", "B4"], // should initialize as empty array, use these for testing...
+			notes: ["G2", "C3"], // should initialize as empty array, use these for testing...
 			selectedNotes: [] // initialize as empty array
 		}
 		this.changeNote=this.changeNote.bind(this);
@@ -33,7 +33,6 @@ class App extends React.Component {
 
 	changeSelection(index, bool) {
 		if ( bool ) {
-			console.log('adding note to selectedNotes.');
 			let s = this.state.selectedNotes;
 			s.push(this.state.notes[index]);
 			this.setState({
@@ -42,7 +41,6 @@ class App extends React.Component {
 				console.log(this.state.selectedNotes);
 			});
 		} else {
-			console.log('removing note from selectedNotes.');
 			let s = this.state.selectedNotes;
 			let x = [];
 			s.forEach(el => {
@@ -57,9 +55,12 @@ class App extends React.Component {
 	}
 
 	changeNote(newNote, index) {
-		console.log('changing note');
+		// this function updates the note at parameter index.
+		console.log('changing note: ', newNote, index);
+		let n = this.state.notes;
+		n[index] = newNote;
 		this.setState({
-			notes: [newNote]
+			notes: n
 		});
 	}
 

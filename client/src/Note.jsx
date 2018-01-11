@@ -10,13 +10,24 @@ class Note extends React.Component {
 		super(props);
 		this.state = {
 			selected: false,
-			currentIndex: 19, // default set to middle C (19 / C4)
-			name: this.props.name // need to keep track of this in order to update accidental.
+			chromaticIndex: undefined, // initialize to undefined - on componentWillMount, use name to lookup/set value.
+			name: this.props.name
 		}
 		this.select = this.select.bind(this);
 		this.getNextNote = this.getNextNote.bind(this);
 		this.moveNote = this.moveNote.bind(this);
 		this.getAccidental = this.getAccidental.bind(this);
+		this.lookupChromaticIndex = this.lookupChromaticIndex.bind(this);
+	}
+
+	lookupChromaticIndex(noteName) {
+		let result = null;
+		chromatic.forEach((tuple, i) => {
+			if ( tuple.indexOf(noteName) !== -1 ) {
+				result = i;
+			}
+		});
+		return result;
 	}
 
 	getAccidental(noteName) {
@@ -31,21 +42,23 @@ class Note extends React.Component {
 	}
 
 	moveNote(direction) {
-		let $child = $('.noteAndAccidentalContainer');
-		let $parent = $child.parent();
-		if ( direction === "up" ) {
-			// get div above $parent
-			let $above = $parent.prev();
-			// remove note/accidental from $parent and append to $above
-			$child.remove();
-			$above.append($child);
-		}
-		if ( direction === "down" ) {
-			// get div below $parent
-			let $below = $parent.next();
-			// remove note/accidental from $parent and append to $below
-			$child.remove();
-			$below.append($child);
+		if ( this.state.selected ) {
+			let $child = $('.noteAndAccidentalContainer');
+			let $parent = $child.parent();
+			if ( direction === "up" ) {
+				// get div above $parent
+				let $above = $parent.prev();
+				// remove note/accidental from $parent and append to $above
+				$child.remove();
+				$above.append($child);
+			}
+			if ( direction === "down" ) {
+				// get div below $parent
+				let $below = $parent.next();
+				// remove note/accidental from $parent and append to $below
+				$child.remove();
+				$below.append($child);
+			}
 		}
 	}
 
@@ -59,12 +72,12 @@ class Note extends React.Component {
 		// if the next note is a sharp or flat version of the same letter (i.e. D -> Db), it won't
 		// trigger the note to move. 
 		//////////////////////////////////////////////////////////////////////////////////////////
-		let c = this.state.currentIndex;
+		let c = this.state.chromaticIndex;
 		let n = this.state.name;
 		if ( direction === 'up' && chromatic[c + 1] ) {
 			let newNote = chromatic[c + 1][0]; // 0th index of tuple is the 'ascending' enharmonic spelling of the note.
 			this.setState({
-				currentIndex: c + 1,
+				chromaticIndex: c + 1,
 				name: newNote
 			});
 			if ( n[0] !== newNote[0] ) {
@@ -75,7 +88,7 @@ class Note extends React.Component {
 		} else if (direction === 'down' && chromatic[c - 1]) {
 			let newNote = chromatic[c - 1][1]; // index 1 of tuple is the 'descending' enharmonic spelling of the note.
 			this.setState({
-				currentIndex: c - 1,
+				chromaticIndex: c - 1,
 				name: newNote
 			});
 			if ( n[0] !== newNote[0] ) {
@@ -104,7 +117,15 @@ class Note extends React.Component {
 			});
 	}
 
-	componentDidMount() {
+	componentWillMount() {
+		let i = this.lookupChromaticIndex(this.state.name);
+		this.setState({
+			chromaticIndex: i
+		});
+	}
+
+	componentDidMount() { // have to use Didmount because I need to access dom elements.
+
 		///////////////////////////////////////////////////
 		// append note component to its initial parent div:
 		///////////////////////////////////////////////////
@@ -129,13 +150,13 @@ class Note extends React.Component {
 					// console.log('move up a half step!');
 					var nextNote = this.getNextNote('up');
 					if ( nextNote !== null ) {
-						this.props.changeNote(nextNote); // callback function from parent component updates parent state
+						this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
 					}
 				} else if ( e.which === 40 ) {
 					// console.log('move down a half step!');
 					var nextNote = this.getNextNote('down');
 					if ( nextNote !== null ) {
-						this.props.changeNote(nextNote); // callback function from parent component updates parent state
+						this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
 					}
 				}
 					if ( nextNote !== undefined ) {
