@@ -9,7 +9,6 @@
 	width: 5%;
 	margin-top: 1%;
 	margin-left: 47.5%;
-	/*visibility: hidden;*/
 }
 
 .space {
@@ -59,15 +58,24 @@
 
 .accidental {
 	position: absolute;
-	width: 2%;
+	width: 1.5%;
+}
+
+#flat {
+  transform: translate(3.5vh, -4.8vh);
+}
+
+#sharp {
+  transform: translate(3.8vh, -3vh);
 }
 
 .accidentalContainer {
 	width: 100%;
-	position: relative;
+	position: absolute;
 	display: inline-block;
 	left: 44%;
-  transform: translate(4vh, -8vh);
+  /*transform: translate(3vh, -5vh);*/
+  z-index: 2;
 }
 
 .noteAndAccidentalContainer {
@@ -76,9 +84,9 @@
 }
 
 .noteNameContainer {
-		height: 50px;
-		width: 75px;
-		border: 1px solid black;
+	height: 50px;
+	width: 75px;
+	border: 1px solid black;
 }
 
 .noteName {

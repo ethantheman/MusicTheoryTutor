@@ -15,7 +15,7 @@ class Accidental extends React.Component {
 		"";
 		return src !== "" ?
 		(
-			<div className="accidentalContainer">
+			<div className="accidentalContainer" id={this.props.type}>
 				<img className="accidental" src={src}></img>
 			</div>
 		) : null; // return nothing if no type specified.

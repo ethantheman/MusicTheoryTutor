@@ -38,6 +38,7 @@ class App extends React.Component {
 			<div>
 					<h1>Interval Buddy</h1>
 			</div>
+			<br/>
 			<GrandStaff changeNote={this.changeNote}/>
 			<div className="noteNameContainer">
 				<div className="noteName">{this.state.notes[0]}</div>
