@@ -74,13 +74,7 @@
 	position: absolute;
 	display: inline-block;
 	left: 44%;
-  /*transform: translate(3vh, -5vh);*/
   z-index: 2;
-}
-
-.noteAndAccidentalContainer {
-	/*width: 50%;*/
-	/*position: relative;*/
 }
 
 .noteNameContainer {
