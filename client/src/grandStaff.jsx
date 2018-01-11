@@ -31,29 +31,30 @@ class GrandStaff extends React.Component {
 					<img src="images/Bass.png" className="bassClef"></img>
 				</div>
 				<div>
-					<div className="space" id="g5">{this.checkNote('G5')}</div>
-					<div className="line" id="f5">{this.checkNote('F5')}</div>
-					<div className="space" id="e5">{this.checkNote('E5')}</div>
-					<div className="line" id="d5">{this.checkNote('D5')}</div>
-					<div className="space" id="c5">{this.checkNote('C5')}</div>
-					<div className="line" id="b4">{this.checkNote('B4')}</div>
-					<div className="space" id="a4">{this.checkNote('A4')}</div>
-					<div className="line" id="g4">{this.checkNote('G4')}</div>
-					<div className="space" id="f4">{this.checkNote('F4')}</div>
-					<div className="line" id="e4">{this.checkNote('E4')}</div>
-					<div className="space" id="d4">{this.checkNote('E4')}</div>
-					<div className="ledger-line" id="c4">{this.checkNote('C4')}</div>
-					<div className="space" id="b3">{this.checkNote('B3')}</div>
-					<div className="line" id="a3">{this.checkNote('A3')}</div>
-					<div className="space" id="g3">{this.checkNote('G3')}</div>
-					<div className="line" id="f3">{this.checkNote('F3')}</div>
-					<div className="space" id="e3">{this.checkNote('E3')}</div>
-					<div className="line" id="d3">{this.checkNote('D3')}</div>
-					<div className="space" id="c3">{this.checkNote('C3')}</div>
-					<div className="line" id="b2">{this.checkNote('B2')}</div>
-					<div className="space" id="a2">{this.checkNote('A2')}</div>
-					<div className="line" id="g2">{this.checkNote('G2')}</div>
-					<div className="space" id="f2">{this.checkNote('F2')}</div>
+					{this.props.notes.map((note, i) => {return <Note name={note} key={i} changeNote={this.props.changeNote}/>})}
+					<div className="space" id="g5"></div>
+					<div className="line" id="f5"></div>
+					<div className="space" id="e5"></div>
+					<div className="line" id="d5"></div>
+					<div className="space" id="c5"></div>
+					<div className="line" id="b4"></div>
+					<div className="space" id="a4"></div>
+					<div className="line" id="g4"></div>
+					<div className="space" id="f4"></div>
+					<div className="line" id="e4"></div>
+					<div className="space" id="d4"></div>
+					<div className="ledger-line" id="c4"></div>
+					<div className="space" id="b3"></div>
+					<div className="line" id="a3"></div>
+					<div className="space" id="g3"></div>
+					<div className="line" id="f3"></div>
+					<div className="space" id="e3"></div>
+					<div className="line" id="d3"></div>
+					<div className="space" id="c3"></div>
+					<div className="line" id="b2"></div>
+					<div className="space" id="a2"></div>
+					<div className="line" id="g2"></div>
+					<div className="space" id="f2"></div>
 				</div>
 			</div>
 			);
