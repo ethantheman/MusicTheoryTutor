@@ -8,7 +8,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: ["G2", "C3"], // should initialize as empty array, use these for testing...
+			notes: ["G2", "F3", "Ab3", "B3", "D4"], // should initialize as empty array, use these for testing...
 			selectedNotes: [] // initialize as empty array
 		}
 		this.changeNote=this.changeNote.bind(this);

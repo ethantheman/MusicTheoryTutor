@@ -43,7 +43,7 @@ class Note extends React.Component {
 
 	moveNote(direction) {
 		if ( this.state.selected ) {
-			let $child = $('.noteAndAccidentalContainer');
+			let $child = $('#'+this.props.index);
 			let $parent = $child.parent();
 			if ( direction === "up" ) {
 				// get div above $parent
