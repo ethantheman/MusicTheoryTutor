@@ -15,6 +15,7 @@ class App extends React.Component {
 		this.getCursorPosition=this.getCursorPosition.bind(this);
 		// this.addNote=this.addNote.bind(this);
 		this.changeSelection=this.changeSelection.bind(this);
+		this.deleteNote = this.deleteNote.bind(this);
 	}
 
 	getCursorPosition(e) {
@@ -31,10 +32,18 @@ class App extends React.Component {
 	// 	});
 	// }
 
+	deleteNote(index) {
+		let n = this.state.notes;
+		n.splice(index, 1);
+		this.setState({
+			notes: n
+		});
+	}
+
 	changeSelection(index, bool) {
 		if ( bool ) {
 			let s = this.state.selectedNotes;
-			s.push(this.state.notes[index]);
+			s.push(index);
 			this.setState({
 				selectedNotes: s
 			}, () => {
@@ -44,7 +53,7 @@ class App extends React.Component {
 			let s = this.state.selectedNotes;
 			let x = [];
 			s.forEach(el => {
-				el === this.state.notes[index] ? null : x.push(el);
+				el === index ? null : x.push(el);
 			})
 			this.setState({
 				selectedNotes: x
@@ -71,7 +80,7 @@ class App extends React.Component {
 				<h1>Ethan's Chord Builder</h1>
 			</div>
 			<br/>
-			<GrandStaff notes={this.state.notes} changeNote={this.changeNote} changeSelection={this.changeSelection} selectedNotes={this.state.selectedNotes}/>
+			<GrandStaff notes={this.state.notes} changeNote={this.changeNote} changeSelection={this.changeSelection} selectedNotes={this.state.selectedNotes} deleteNote={this.deleteNote}/>
 			{this.state.notes.map((note, i) => {
 				return (<div className="noteNameContainer" key={i}>
 									<div className="noteName">{note}</div>

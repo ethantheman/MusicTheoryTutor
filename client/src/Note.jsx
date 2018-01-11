@@ -139,11 +139,17 @@ class Note extends React.Component {
 		$parent.append($child);
 
 		//////////////////////////////////////////////////
-		// listen for note movement:
+		// listen for note movement/deletion:
 		///////////////////////////////////////////////////
 		document.addEventListener("keydown", (e) => {
-			// only register up and down arrow keys if note is selected.
+			// only fire events if note is selected.
 			if ( this.state.selected ) {
+				if ( e.which === 8 ) {
+					// delete the note
+					// $('#'+this.props.index).attr('style', {"display": "none"});
+					// $('#'+this.props.index).remove();
+					this.props.deleteNote(this.props.index);
+				}
 				let n = this.state.note;
 				// console.log(n);
 				if ( e.which === 38 ) {

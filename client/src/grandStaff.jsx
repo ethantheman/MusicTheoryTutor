@@ -31,7 +31,7 @@ class GrandStaff extends React.Component {
 					<img src="images/Bass.png" className="bassClef"></img>
 				</div>
 				<div>
-					{this.props.notes.map((note, i) => {return <Note name={note} key={i} index={i} changeSelection={this.props.changeSelection} changeNote={this.props.changeNote}/>})}
+					{this.props.notes.map((note, i) => {return <Note name={note} key={i} index={i} changeSelection={this.props.changeSelection} changeNote={this.props.changeNote} deleteNote={this.props.deleteNote}/>})}
 					<div className="space" id="g5"></div>
 					<div className="line" id="f5"></div>
 					<div className="space" id="e5"></div>
