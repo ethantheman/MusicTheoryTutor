@@ -34,14 +34,14 @@ class Note extends React.Component {
 
 		let $child = $('.noteAndAccidentalContainer');
 		let $parent = $child.parent();
-		console.log('current parent: ', $parent.attr('id'));
+		// console.log('current parent: ', $parent.attr('id'));
 		if ( direction === "up" ) {
 			// get div above $parent
 			let $above = $parent.prev();
 			// remove note/accidental from $parent and append to $below
 			$child.remove();
 			$above.prepend($child);
-			console.log('new parent: ', $above.attr('id'));
+			// console.log('new parent: ', $above.attr('id'));
 		}
 		if ( direction === "down" ) {
 			// get div below $parent
@@ -49,16 +49,22 @@ class Note extends React.Component {
 			// remove note/accidental from $parent and append to $below
 			$child.remove();
 			$below.prepend($child);
-			console.log('new parent: ', $below.attr('id'));
+			// console.log('new parent: ', $below.attr('id'));
 		}
 		
 	}
 
 	getNextNote(direction) {
+		// this function looks for the next note in the direction user clicks (up or down).
+		// if the next note has a different letter name (i.e. D# -> E ), it will trigger the note
+		// to move to the next div.
+		// if the next note is a sharp or flat version of the same letter (i.e. D -> Db), it won't
+		// trigger the note to move. 
+
 		let c = this.state.currentIndex;
 		let n = this.state.currentNote;
 		if ( direction === 'up' && chromatic[c + 1] ) {
-			let newNote = chromatic[c + 1][0];
+			let newNote = chromatic[c + 1][0]; // 0th index of tuple is the 'ascending' enharmonic spelling of the note.
 			this.setState({
 				currentIndex: c + 1,
 				currentNote: newNote
@@ -67,9 +73,9 @@ class Note extends React.Component {
 				// note letter changed - note needs to move
 				this.moveNote("up");
 			}
-			return chromatic[c + 1][0]; // first el in tuple is the ascending enharmonic name.
+			return newNote;
 		} else if (direction === 'down' && chromatic[c - 1]) {
-			let newNote = chromatic[c - 1][1];
+			let newNote = chromatic[c - 1][1]; // index 1 of tuple is the 'descending' enharmonic spelling of the note.
 			this.setState({
 				currentIndex: c - 1,
 				currentNote: newNote
@@ -78,7 +84,7 @@ class Note extends React.Component {
 				// note letter changed - note needs to move.
 				this.moveNote("down");
 			}
-			return chromatic[c - 1][1]; // second el in tuple is the descending enharmonic name.
+			return newNote;
 		} else {
 			return null;
 		}

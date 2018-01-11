@@ -36,7 +36,7 @@ class App extends React.Component {
 		return (
 		<div onClick={this.getCursorPosition}>
 			<div>
-					<h1>Learn Your Intervals</h1>
+					<h1>Interval Buddy</h1>
 			</div>
 			<GrandStaff changeNote={this.changeNote}/>
 			<div className="noteNameContainer">
