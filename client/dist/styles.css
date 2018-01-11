@@ -59,7 +59,7 @@
 
 .accidental {
 	position: absolute;
-	width: 5%;
+	width: 2%;
 }
 
 .accidentalContainer {
@@ -67,7 +67,7 @@
 	position: relative;
 	display: inline-block;
 	left: 44%;
-	transform: translate(0px, -35px);
+  transform: translate(4vh, -8vh);
 }
 
 .noteAndAccidentalContainer {
