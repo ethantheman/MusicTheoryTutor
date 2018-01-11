@@ -11,7 +11,7 @@ class Note extends React.Component {
 		this.state = {
 			selected: false,
 			currentIndex: 19, // default set to middle C (19 / C4)
-			currentNote: "C4" // need to keep track of this in order to update accidental.
+			name: this.props.name // need to keep track of this in order to update accidental.
 		}
 		this.select = this.select.bind(this);
 		this.getNextNote = this.getNextNote.bind(this);
@@ -62,12 +62,12 @@ class Note extends React.Component {
 		// trigger the note to move. 
 
 		let c = this.state.currentIndex;
-		let n = this.state.currentNote;
+		let n = this.state.name;
 		if ( direction === 'up' && chromatic[c + 1] ) {
 			let newNote = chromatic[c + 1][0]; // 0th index of tuple is the 'ascending' enharmonic spelling of the note.
 			this.setState({
 				currentIndex: c + 1,
-				currentNote: newNote
+				name: newNote
 			});
 			if ( n[0] !== newNote[0] ) {
 				// note letter changed - note needs to move
@@ -78,7 +78,7 @@ class Note extends React.Component {
 			let newNote = chromatic[c - 1][1]; // index 1 of tuple is the 'descending' enharmonic spelling of the note.
 			this.setState({
 				currentIndex: c - 1,
-				currentNote: newNote
+				name: newNote
 			});
 			if ( n[0] !== newNote[0] ) {
 				// note letter changed - note needs to move.
@@ -100,6 +100,19 @@ class Note extends React.Component {
 	}
 
 	componentDidMount() {
+		///////////////////////////////////////////////////
+		// append note component to its initial parent div:
+
+		let n = this.props.name.toLowerCase();
+		// handle accidentals:
+		if ( n.length > 2 ) {
+			n = n[0] + n[2]; // remove the accidental which will always be at position 1.
+		}
+		let $parent = $('#' + n);
+		let $child = $('#'+this.props.name);
+		$parent.append($child);
+		//////////////////////////////////////////////////
+		// listen for note movement:
 		document.addEventListener("keydown", (e) => {
 			// only register up and down arrow keys if note is selected.
 			if ( this.state.selected ) {
@@ -129,8 +142,8 @@ class Note extends React.Component {
 
 	render() {
 		return (
-		<div className="noteAndAccidentalContainer">
-			<Accidental type={this.getAccidental(this.state.currentNote)}/>
+		<div className="noteAndAccidentalContainer" id={this.props.name}>
+			<Accidental type={this.getAccidental(this.state.name)}/>
 			<div onClick={this.select} className={!this.state.selected ? 'note' : 'activeNote'}></div>
 		</div>
 		);

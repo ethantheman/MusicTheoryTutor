@@ -8,7 +8,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: ["C4"], // addNote button will append a new note to this array. will need some way to distinguish notes from each other...maybe change this to an object?
+			notes: ["C4", "G5", "E3", "Bb4"], // addNote button will append a new note to this array. will need some way to distinguish notes from each other...maybe change this to an object?
 			selectedNote: "C4" // may need to refactor note selection to keep track of this in parent component...
 		}
 		this.changeNote=this.changeNote.bind(this);
@@ -18,7 +18,7 @@ class App extends React.Component {
 
 	getCursorPosition(e) {
 		// use the coordinates clicked to lookup which div was clicked
-		console.log('click! x: ', e.pageX, 'y: ', e.pageY);
+		// console.log('click! x: ', e.pageX, 'y: ', e.pageY);
 	}
 
 	addNote(newNote) {

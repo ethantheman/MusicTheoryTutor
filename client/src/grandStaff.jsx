@@ -16,6 +16,7 @@ class GrandStaff extends React.Component {
 					<img src="images/Bass.png" className="bassClef"></img>
 				</div>
 				<div>
+					{this.props.notes.map((note, i) => {return <Note name={note} key={i} changeNote={this.props.changeNote}/>})}
 					<div className="space" id="g5"></div>
 					<div className="line" id="f5"></div>
 					<div className="space" id="e5"></div>
@@ -27,7 +28,7 @@ class GrandStaff extends React.Component {
 					<div className="space" id="f4"></div>
 					<div className="line" id="e4"></div>
 					<div className="space" id="d4"></div>
-					<div className="ledger-line" id="c4"><Note changeNote={this.props.changeNote}/></div>
+					<div className="ledger-line" id="c4"></div>
 					<div className="space" id="b3"></div>
 					<div className="line" id="a3"></div>
 					<div className="space" id="g3"></div>
