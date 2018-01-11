@@ -1,6 +1,5 @@
 1. Accidental component:
-	- position relative to note
-		- refactor note movement to change the div the note is appended to rather than moving it up/down by a %.
+	- position next to note
 2. Calibrate Note movement
 	- calculate spacing between lines
 	- note should move one 'step' when its letter changes (i.e., D -> Db is not a step, but Db -> C is)

@@ -1,15 +1,23 @@
 .line {
-	height: 4%;
+	border-top: 1px solid black;
 	width: 100%;
-	text-align:center;
+	margin-top: 1%;
+}
+
+.ledger-line {
+	border-top: 1px solid black; /* This should change from white to black only when there's a ledger-line note on the staff. */
+	width: 5%;
+	margin-top: 1%;
+	margin-left: 47.5%;
+	/*visibility: hidden;*/
 }
 
 .space {
-	height: 4%;
+	border-top: 1px solid white;
 	width: 100%;
-	text-align: center;
+	margin-top: 1%;
 }
-
+/*
 .trebleClef {
 	height: 16%;
 	position: absolute;
@@ -23,30 +31,48 @@
 	position: absolute;
 	z-index: 1;
 	top: 24%;
-}
+}*/
 
 .note {
 	position: absolute;	
-	width: 3%;
-	height: 2.5%;
+	width: 3.5%;
+	height: 3.5%;
 	background: #000000;
 	z-index: 1;
 	border-radius: 50%;
-	left: 50%;
+	left: 48.3%;
 	display:inline-block;
-	/*top: 10.4%;*/
+	margin-top: -1%;
 }
 
 .activeNote {
 	position: absolute;	
-	width: 3%;
-	height: 2.5%;
+	width: 3.5%;
+	height: 3.5%;
 	z-index: 1;
 	background: red;
 	border-radius: 50%;
-	left: 50%;
+	left: 48.3%;
 	display: inline-block;
-	/*top: 10.4%;*/
+	margin-top: -1%;
+}
+
+.accidental {
+	position: absolute;
+	width: 5%;
+}
+
+.accidentalContainer {
+	width: 100%;
+	position: relative;
+	display: inline-block;
+	left: 44%;
+	transform: translate(0px, -35px);
+}
+
+.noteAndAccidentalContainer {
+	/*width: 50%;*/
+	/*position: relative;*/
 }
 
 .noteNameContainer {
@@ -63,34 +89,6 @@
   font-size: 30px;
 }
 
-#middle-C {
-	position: absolute;
-	width: 50px;
-	left: 50%;
-}
-
-#space {
-	height: 4%;
-	visibility: hidden;
-}
-
-.accidental {
-	z-index: 0;
-	/*display: inline;*/
-	width: 100%;
-	height: auto;
-}
-
-.accidentalContainer {
-	height: 100px;
-	width: 100px;
-	display: inline-block;
-}
-
-.noteAndAccidentalContainer {
-	text-align: center;
-	left: 50%;
-}
 
 h1 {
 	text-align: center;
