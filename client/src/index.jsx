@@ -8,7 +8,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: ["C4", "G5", "E3", "Bb4"], // addNote button will append a new note to this array. will need some way to distinguish notes from each other...maybe change this to an object?
+			notes: ["C4", "F#4", "Eb5", "G#2", "Ab3"], // addNote button will append a new note to this array. will need some way to distinguish notes from each other...maybe change this to an object?
 			selectedNote: "C4" // may need to refactor note selection to keep track of this in parent component...
 		}
 		this.changeNote=this.changeNote.bind(this);

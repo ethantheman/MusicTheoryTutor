@@ -106,17 +106,21 @@ class Note extends React.Component {
 	componentDidMount() {
 		///////////////////////////////////////////////////
 		// append note component to its initial parent div:
-
+		///////////////////////////////////////////////////
+		
 		let n = this.props.name.toLowerCase();
+
 		// handle accidentals:
 		if ( n.length > 2 ) {
-			n = n[0] + n[2]; // remove the accidental which will always be at position 1.
+			n = n[0] + n[2]; // remove the accidental, which will always be at index 1 in the string.
 		}
 		let $parent = $('#' + n);
-		let $child = $('#'+this.props.name);
+		let $child = $('#'+this.props.index);
 		$parent.append($child);
+
 		//////////////////////////////////////////////////
 		// listen for note movement:
+		///////////////////////////////////////////////////
 		document.addEventListener("keydown", (e) => {
 			// only register up and down arrow keys if note is selected.
 			if ( this.state.selected ) {
@@ -146,7 +150,7 @@ class Note extends React.Component {
 
 	render() {
 		return (
-		<div className="noteAndAccidentalContainer" id={this.props.name}>
+		<div className="noteAndAccidentalContainer" id={this.props.index} >
 			<Accidental type={this.getAccidental(this.state.name)}/>
 			<div onClick={this.select} className={!this.state.selected ? 'note' : 'activeNote'}></div>
 		</div>
