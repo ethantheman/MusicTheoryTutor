@@ -11,13 +11,14 @@ class Note extends React.Component {
 		this.state = {
 			selected: false,
 			chromaticIndex: undefined, // initialize to undefined - on componentWillMount, use name to lookup/set value.
-			name: this.props.name
+			deleted: false
 		}
 		this.select = this.select.bind(this);
 		this.getNextNote = this.getNextNote.bind(this);
 		this.moveNote = this.moveNote.bind(this);
 		this.getAccidental = this.getAccidental.bind(this);
 		this.lookupChromaticIndex = this.lookupChromaticIndex.bind(this);
+		this.keydownHandler = this.keydownHandler.bind(this);
 	}
 
 	lookupChromaticIndex(noteName) {
@@ -73,7 +74,7 @@ class Note extends React.Component {
 		// trigger the note to move. 
 		//////////////////////////////////////////////////////////////////////////////////////////
 		let c = this.state.chromaticIndex;
-		let n = this.state.name;
+		let n = this.props.name;
 		if ( direction === 'up' && chromatic[c + 1] ) {
 			let newNote = chromatic[c + 1][0]; // 0th index of tuple is the 'ascending' enharmonic spelling of the note.
 			this.setState({
@@ -117,14 +118,51 @@ class Note extends React.Component {
 			});
 	}
 
+	keydownHandler(e) {
+		// only fire events if note is selected.
+		if ( this.state.selected ) {
+			let n = this.props.name;
+			if ( e.which === 8 ) {
+				console.log('you called delete on: ', n, 'at index: ', this.props.index);
+				this.setState({deleted: true}, () => {
+					this.props.deleteNote(this.props.index);
+				});
+			}
+			// console.log(n);
+			if ( e.which === 38 ) {
+				// console.log('move up a half step!');
+				var nextNote = this.getNextNote('up');
+				if ( nextNote !== null ) {
+					this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
+				}
+			} else if ( e.which === 40 ) {
+				// console.log('move down a half step!');
+				var nextNote = this.getNextNote('down');
+				if ( nextNote !== null ) {
+					this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
+				}
+			}
+				if ( nextNote !== undefined ) {
+					this.setState({
+						"note": nextNote
+					});
+				}
+		}
+	}
+
 	componentWillMount() {
-		let i = this.lookupChromaticIndex(this.state.name);
+		let i = this.lookupChromaticIndex(this.props.name);
 		this.setState({
 			chromaticIndex: i
 		});
 	}
 
-	componentDidMount() { // have to use Didmount because I need to access dom elements.
+	componentWillUnmount() {
+		console.log('unmounting!');
+		// document.removeEventListener("keydown", this.keydownHandler);
+	}
+
+	componentDidMount() { // I use Didmount here because I need to access dom elements.
 
 		///////////////////////////////////////////////////
 		// append note component to its initial parent div:
@@ -138,48 +176,20 @@ class Note extends React.Component {
 		let $child = $('#'+this.props.index); // the div that contains this note and its accidental.
 		$parent.append($child);
 
-		//////////////////////////////////////////////////
+		/////////////////////////////////////
 		// listen for note movement/deletion:
-		///////////////////////////////////////////////////
-		document.addEventListener("keydown", (e) => {
-			// only fire events if note is selected.
-			if ( this.state.selected ) {
-				if ( e.which === 8 ) {
-					// delete the note
-					// $('#'+this.props.index).attr('style', {"display": "none"});
-					// $('#'+this.props.index).remove();
-					this.props.deleteNote(this.props.index);
-				}
-				let n = this.state.note;
-				// console.log(n);
-				if ( e.which === 38 ) {
-					// console.log('move up a half step!');
-					var nextNote = this.getNextNote('up');
-					if ( nextNote !== null ) {
-						this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
-					}
-				} else if ( e.which === 40 ) {
-					// console.log('move down a half step!');
-					var nextNote = this.getNextNote('down');
-					if ( nextNote !== null ) {
-						this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
-					}
-				}
-					if ( nextNote !== undefined ) {
-						this.setState({
-							"note": nextNote
-						});
-					}
-			}
-		});
+		/////////////////////////////////////
+
+		document.addEventListener("keydown", this.keydownHandler);
 	}
 
 	render() {
-		return (
-		<div className="noteAndAccidentalContainer" id={this.props.index} >
-			<Accidental type={this.getAccidental(this.state.name)}/>
-			<div onClick={this.select} className={!this.state.selected ? 'note' : 'activeNote'}></div>
-		</div>
+		return this.state.deleted ? null : 
+		(
+			<div className="noteAndAccidentalContainer" id={this.props.index} >
+				<Accidental type={this.getAccidental(this.props.name)}/>
+				<div onClick={this.select} className={!this.state.selected ? 'note' : 'activeNote'}></div>
+			</div>
 		);
 	}
 }
