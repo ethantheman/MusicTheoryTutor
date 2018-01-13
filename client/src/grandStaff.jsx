@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Note from './Note.jsx';
 import NoteNameDisplay from './NoteNameDisplay.jsx';
+var Wad = require('web-audio-daw');
+
 
 class GrandStaff extends React.Component {
 	constructor(props) {
@@ -12,30 +14,40 @@ class GrandStaff extends React.Component {
 			{"name": "E4", "deleted": false},
 			{"name": "G4", "deleted": false}
 			], // should initialize as empty array, use these for testing...
-			selectedNotes: [] // initialize as empty array
+			selectedNotes: [], // initialize as empty array,
+			notesToShow: []
 		}
 		this.changeNote=this.changeNote.bind(this);
 		this.changeSelection=this.changeSelection.bind(this);
 		this.deleteNote = this.deleteNote.bind(this);
+		this.playChord = this.playChord.bind(this);
+		this.getNotesToShow = this.getNotesToShow.bind(this);
 	}
 
 	deleteNote(index) {
+		// flip deleted flag
 		let n = this.state.notes;
 		n[index].deleted = true;
-		this.setState({
-			notes: n
-		}, () => {
-			console.log('remaining notes: ', this.state.notes)
-		});
+		this.setState({notes: n});
+
+		let noteToDelete = this.state.notes[index].name;
+		let found = this.state.notesToShow.indexOf(noteToDelete);
+		if (found >= 0) {
+			this.state.notesToShow.splice(found, 1);
+			this.setState({
+				notesToShow: this.state.notesToShow
+			})
+		}
 	}
 
 	changeNote(newNote, index) {
 		// this function updates the note at parameter index.
 		console.log('changing note: ', newNote, index);
 		let n = this.state.notes;
-		n[index] = {"name": newNote, "selected": false, "deleted": false};
+		n[index] = {"name": newNote, "deleted": false};
 		this.setState({
-			notes: n
+			notes: n,
+			notesToShow: this.getNotesToShow()
 		});
 	}
 
@@ -62,22 +74,43 @@ class GrandStaff extends React.Component {
 		}
 	}
 
+	playChord() {
+		// use the web audio daw to play all the notes on the staff.
+		let chord = [];
+		this.state.notesToShow.forEach(note => {
+			if ( obj.deleted === false ) {
+				chord.push(obj.name);
+			}
+		});
+		console.log(chord);
+		let c = new Wad({source: 'triangle'});
+		chord.forEach(note => {
+			c.play({volume: 0.5, pitch: note});
+		})
+	}
+
 	// checkNote(letter) {
 	// 	// EDGE CASE TO WORK OUT LATER - WHAT IF TWO OF THE SAME NOTE ARE IN NOTES ARRAY?
 
 	// 	let sharp = letter[0] + '#' + letter[1];
 	// 	let natural = letter;
 	// 	let flat = letter[0] + 'b' + letter[1];
-		
+
 	// 	// check if any version of note (sharp, natural or flat) is in notes array, if so render a Note object.
-	// 	return this.props.notes.includes(natural) ? (<Note name={natural} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>) 
+	// 	return this.props.notes.includes(natural) ? (<Note name={natural} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
 	// 	: this.props.notes.includes(sharp) ? (<Note name={sharp} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
 	// 	: this.props.notes.includes(flat) ? (<Note name={flat} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
 	// 	: null;
 	// }
 
-	componentWillUpdate() {
-		console.log('updating!', this.state);
+	componentWillMount() {
+		this.setState({
+			notesToShow: this.state.notes.map(obj => obj.name)
+		});
+	}
+
+	getNotesToShow() {
+		return this.state.notes.filter(note => note.deleted === false).map(obj => obj.name)
 	}
 
 	render() {
@@ -88,7 +121,7 @@ class GrandStaff extends React.Component {
 					<img src="images/Bass.png" className="bassClef"></img>
 				</div>
 				<div>
-					{this.state.notes.map((note, i) => {return note.deleted === false ? <Note name={note.name} key={i} index={i} changeSelection={this.changeSelection} changeNote={this.changeNote} deleteNote={this.deleteNote}/> : null})}
+					{this.state.notes.map((note, i) => {return <Note name={note.name} key={i} index={i} changeSelection={this.changeSelection} changeNote={this.changeNote} deleteNote={this.deleteNote}/>})}
 					<div className="space" id="g5"></div>
 					<div className="line" id="f5"></div>
 					<div className="space" id="e5"></div>
@@ -113,7 +146,8 @@ class GrandStaff extends React.Component {
 					<div className="line" id="g2"></div>
 					<div className="space" id="f2"></div>
 				</div>
-				{this.state.notes.map((note, i) => {return note.deleted ? null : <NoteNameDisplay name={note.name} deleted={note.deleted} key={i}/>})}
+				{this.state.notesToShow.map((name, i) => { return <NoteNameDisplay name={name} key={i}/> })}
+				<div className="playButtonContainer"><button id="playButton" onClick={this.playChord}>Play your chord!</button></div>
 			</div>
 			);
 	}

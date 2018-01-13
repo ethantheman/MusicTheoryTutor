@@ -159,7 +159,7 @@ class Note extends React.Component {
 
 	componentWillUnmount() {
 		console.log('unmounting!');
-		// document.removeEventListener("keydown", this.keydownHandler);
+		document.removeEventListener("keydown", this.keydownHandler);
 	}
 
 	componentDidMount() { // I use Didmount here because I need to access dom elements.

@@ -36,6 +36,7 @@
     "nodemon": "^1.14.10",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "web-audio-daw": "^2.7.1",
     "webpack": "^3.1.0"
   }
 }
