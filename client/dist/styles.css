@@ -20,7 +20,7 @@
 }
 
 .trebleClef {
-	height: 23vh;
+	height: 26vh;
 	position: absolute;
 	z-index: 1;
 	top: 12vh;
@@ -28,10 +28,10 @@
 }
 
 .bassClef {
-	height: 13vh;
+	height: 16vh;
 	position: absolute;
 	z-index: 1;
-	top: 37vh;
+	top: 42vh;
 	left: 1%;
 }
 

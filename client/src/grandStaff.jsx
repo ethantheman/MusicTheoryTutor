@@ -22,7 +22,7 @@ class GrandStaff extends React.Component {
 	}
 
 	addNote(e) {
-		console.log(e.target.id);
+		// console.log(e.target.id);
 		let newNote = {"name": e.target.id.toUpperCase(), "deleted": false};
 		this.state.notes.push(newNote);
 		this.state.notesToShow.push(newNote.name);
