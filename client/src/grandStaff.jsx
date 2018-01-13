@@ -44,10 +44,13 @@ class GrandStaff extends React.Component {
 		// this function updates the note at parameter index.
 		console.log('changing note: ', newNote, index);
 		let n = this.state.notes;
-		n[index] = {"name": newNote, "deleted": false};
+		n[index].deleted === false ? n[index] = {"name": newNote, "deleted": false} : console.log('you already deleted this note!');
 		this.setState({
-			notes: n,
-			notesToShow: this.getNotesToShow()
+			notes: n
+		}, () => {
+			this.setState({
+				notesToShow: this.getNotesToShow()
+			});
 		});
 	}
 
@@ -77,7 +80,7 @@ class GrandStaff extends React.Component {
 	playChord() {
 		// use the web audio daw to play all the notes on the staff.
 		let chord = [];
-		this.state.notesToShow.forEach(note => {
+		this.state.notes.forEach(obj => {
 			if ( obj.deleted === false ) {
 				chord.push(obj.name);
 			}
