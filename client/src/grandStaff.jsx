@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Note from './Note.jsx';
 import NoteNameDisplay from './NoteNameDisplay.jsx';
+import IntervalDisplay from './IntervalDisplay.jsx';
+import $ from 'jquery';
 var Wad = require('web-audio-daw');
-
 
 class GrandStaff extends React.Component {
 	constructor(props) {
@@ -11,53 +12,78 @@ class GrandStaff extends React.Component {
 		this.state = {
 			notes: [], // should initialize as empty array, use these for testing...
 			selectedNotes: [],
-			notesToShow: []
+			notesToDisplay: [],
+			intervalToDisplay: []
 		}
-		this.changeNote=this.changeNote.bind(this);
-		this.changeSelection=this.changeSelection.bind(this);
+		this.changeNote = this.changeNote.bind(this);
+		this.changeSelection = this.changeSelection.bind(this);
 		this.deleteNote = this.deleteNote.bind(this);
 		this.playChord = this.playChord.bind(this);
-		this.getNotesToShow = this.getNotesToShow.bind(this);
+		this.getNotesToDisplay = this.getNotesToDisplay.bind(this);
 		this.addNote = this.addNote.bind(this);
+		this.addNoteToInterval = this.addNoteToInterval.bind(this);
+	}
+
+	addNoteToInterval(note, cb) {
+		// only add the note if it's not already in array. if it is already in the array, remove it.
+		// cb from child updates noteNameDisplay state to paint border red when it is selected.
+		let a = this.state.intervalToDisplay;
+		if ( a.includes(note) ) {
+			a.splice(a.indexOf(note), 1);
+			this.setState({intervalToDisplay: a}, cb(false));
+		} else {
+			if ( a.length < 2 ) { // only two notes should be in array at a time.
+				a.push(note);
+				this.setState({intervalToDisplay: a}, cb(true));
+			} else {
+				alert('you must remove a note from the interval before adding another.');
+			}
+		}
 	}
 
 	addNote(e) {
-		// console.log(e.target.id);
 		let newNote = {"name": e.target.id.toUpperCase(), "deleted": false};
 		this.state.notes.push(newNote);
-		this.state.notesToShow.push(newNote.name);
+		this.state.notesToDisplay.push(newNote.name);
 		this.setState({
 			notes: this.state.notes,
-			notesToShow: this.state.notesToShow
+			notesToDisplay: this.state.notesToDisplay
 		});
 	}
 
 	deleteNote(index) {
-		// flip deleted flag
+
+		// flip deleted flag on note at index
 		let n = this.state.notes;
 		n[index].deleted = true;
 		this.setState({notes: n});
 
+		// remove note from notesToDisplay
 		let noteToDelete = this.state.notes[index].name;
-		let found = this.state.notesToShow.indexOf(noteToDelete);
+		let found = this.state.notesToDisplay.indexOf(noteToDelete);
 		if (found >= 0) {
-			this.state.notesToShow.splice(found, 1);
+			this.state.notesToDisplay.splice(found, 1);
 			this.setState({
-				notesToShow: this.state.notesToShow
-			})
+				notesToDisplay: this.state.notesToDisplay
+			});
 		}
 	}
 
-	changeNote(newNote, index) {
+	changeNote(oldNote, newNote, index) {
 		// this function updates the note at parameter index.
-		console.log('changing note: ', newNote, index);
+		console.log('changing note from ', oldNote, 'to: ', newNote, index);
 		let n = this.state.notes;
 		n[index].deleted === false ? n[index] = {"name": newNote, "deleted": false} : console.log('you already deleted this note!');
 		this.setState({
 			notes: n
 		}, () => {
 			this.setState({
-				notesToShow: this.getNotesToShow()
+				notesToDisplay: this.getNotesToDisplay()
+			}, () => { // update interval display if necessary:
+				if ( this.state.intervalToDisplay.includes(oldNote) ) {
+					this.state.intervalToDisplay[this.state.intervalToDisplay.indexOf(oldNote)] = newNote;
+					this.setState({intervalToDisplay: this.state.intervalToDisplay});
+				}
 			});
 		});
 	}
@@ -94,37 +120,24 @@ class GrandStaff extends React.Component {
 			}
 		});
 		console.log(chord);
-		let c = new Wad({source: 'triangle'});
+		let c = new Wad({source: 'sine'});
 		chord.forEach(note => {
 			c.play({volume: 0.5, pitch: note});
 		})
 	}
 
-	// checkNote(letter) {
-	// 	// EDGE CASE TO WORK OUT LATER - WHAT IF TWO OF THE SAME NOTE ARE IN NOTES ARRAY?
-
-	// 	let sharp = letter[0] + '#' + letter[1];
-	// 	let natural = letter;
-	// 	let flat = letter[0] + 'b' + letter[1];
-
-	// 	// check if any version of note (sharp, natural or flat) is in notes array, if so render a Note object.
-	// 	return this.props.notes.includes(natural) ? (<Note name={natural} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
-	// 	: this.props.notes.includes(sharp) ? (<Note name={sharp} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
-	// 	: this.props.notes.includes(flat) ? (<Note name={flat} changeNote={this.props.changeNote} changeSelection={this.props.changeSelection} selectedNote={this.props.selectedNote}/>)
-	// 	: null;
-	// }
-
 	componentWillMount() {
 		this.setState({
-			notesToShow: this.state.notes.map(obj => obj.name)
+			notesToDisplay: this.state.notes.map(obj => obj.name)
 		});
 	}
 
-	getNotesToShow() {
+	getNotesToDisplay() {
 		return this.state.notes.filter(note => note.deleted === false).map(obj => obj.name)
 	}
 
 	render() {
+		console.log('interval: ', this.state.intervalToDisplay);
 		return (
 			<div>
 				<div>
@@ -158,10 +171,10 @@ class GrandStaff extends React.Component {
 					<div className="line" id="g2" onClick={this.addNote}></div>
 					<div className="space" id="f2" onClick={this.addNote}></div>
 					<div className="ledger-line" id="e2" onClick={this.addNote}></div>
-
 				</div>
-				{this.state.notesToShow.map((name, i) => { return <NoteNameDisplay name={name} key={i}/> })}
+				{this.state.notesToDisplay.map((name, i) => { return <NoteNameDisplay name={name} key={i} addToInterval={this.addNoteToInterval}/> })}
 				<div className="playButtonContainer"><button id="playButton" onClick={this.playChord}>Play your chord!</button></div>
+				<IntervalDisplay interval={this.state.intervalToDisplay}/>
 			</div>
 			);
 	}

@@ -133,13 +133,13 @@ class Note extends React.Component {
 				// console.log('move up a half step!');
 				var nextNote = this.getNextNote('up');
 				if ( nextNote !== null ) {
-					this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
+					this.props.changeNote(n, nextNote, this.props.index); // callback function from parent component updates parent state
 				}
 			} else if ( e.which === 40 ) {
 				// console.log('move down a half step!');
 				var nextNote = this.getNextNote('down');
 				if ( nextNote !== null ) {
-					this.props.changeNote(nextNote, this.props.index); // callback function from parent component updates parent state
+					this.props.changeNote(n, nextNote, this.props.index); // callback function from parent component updates parent state
 				}
 			}
 				if ( nextNote !== undefined ) {
