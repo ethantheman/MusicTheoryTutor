@@ -65,6 +65,11 @@ class GrandStaff extends React.Component {
 			this.state.notesToDisplay.splice(found, 1);
 			this.setState({
 				notesToDisplay: this.state.notesToDisplay
+			}, () => { // delete note from intervalToDisplay if necessary
+				if ( this.state.intervalToDisplay.includes(this.state.notes[index].name) ) {
+					this.state.intervalToDisplay.splice(this.state.intervalToDisplay.indexOf(this.state.notes[index].name), 1);
+					this.setState({intervalToDisplay: this.state.intervalToDisplay});
+				}
 			});
 		}
 	}
@@ -74,7 +79,7 @@ class GrandStaff extends React.Component {
 		console.log('changing note from ', oldNote, 'to: ', newNote, index);
 		let n = this.state.notes;
 		n[index].deleted === false ? n[index] = {"name": newNote, "deleted": false} : console.log('you already deleted this note!');
-		this.setState({
+		this.setState({ 
 			notes: n
 		}, () => {
 			this.setState({
@@ -172,7 +177,7 @@ class GrandStaff extends React.Component {
 					<div className="space" id="f2" onClick={this.addNote}></div>
 					<div className="ledger-line" id="e2" onClick={this.addNote}></div>
 				</div>
-				{this.state.notesToDisplay.map((name, i) => { return <NoteNameDisplay name={name} key={i} addToInterval={this.addNoteToInterval}/> })}
+				{this.state.notesToDisplay.slice(0).reverse().map((name, i) => { return <NoteNameDisplay name={name} key={i} addToInterval={this.addNoteToInterval}/> })}
 				<div className="playButtonContainer"><button id="playButton" onClick={this.playChord}>Play your chord!</button></div>
 				<IntervalDisplay interval={this.state.intervalToDisplay}/>
 			</div>

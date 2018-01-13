@@ -57,17 +57,17 @@ const chromatic = [
 
 const intervals = [
 	"unison",
-	 "m2", 
-	 "M2", 
-	 "m3", 
-	 "M3", 
-	 "P4", 
+	 "minor 2nd", 
+	 "Major 2nd", 
+	 "minor 3rd", 
+	 "Major 3rd", 
+	 "Perfect 4th", 
 	 "tritone", 
-	 "P5", 
-	 "m6", 
-	 "M6", 
-	 "m7", 
-	 "M7", 
+	 "Perfect 5th", 
+	 "minor 6th", 
+	 "Major 6th", 
+	 "minor 7th", 
+	 "Major 7th", 
 	 "octave"
 ];
 

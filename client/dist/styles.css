@@ -81,13 +81,15 @@
 .noteNameContainer {
 	height: 50px;
 	width: 75px;
-	border: 1px solid black;
+	border: 0.5vh solid black;
+	margin-bottom: 0.2vh;
 }
 
 .activeNoteNameContainer {
 	height: 50px;
 	width: 75px;
-	border: 1px solid red;
+	border: 0.5vh solid red;
+	margin-bottom: 0.2vh;
 }
 
 .noteName {
