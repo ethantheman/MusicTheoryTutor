@@ -9,12 +9,8 @@ class GrandStaff extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: [
-			{"name": "C4", "deleted": false},
-			{"name": "E4", "deleted": false},
-			{"name": "G4", "deleted": false}
-			], // should initialize as empty array, use these for testing...
-			selectedNotes: [], // initialize as empty array,
+			notes: [], // should initialize as empty array, use these for testing...
+			selectedNotes: [],
 			notesToShow: []
 		}
 		this.changeNote=this.changeNote.bind(this);
@@ -22,6 +18,18 @@ class GrandStaff extends React.Component {
 		this.deleteNote = this.deleteNote.bind(this);
 		this.playChord = this.playChord.bind(this);
 		this.getNotesToShow = this.getNotesToShow.bind(this);
+		this.addNote = this.addNote.bind(this);
+	}
+
+	addNote(e) {
+		console.log(e.target.id);
+		let newNote = {"name": e.target.id.toUpperCase(), "deleted": false};
+		this.state.notes.push(newNote);
+		this.state.notesToShow.push(newNote.name);
+		this.setState({
+			notes: this.state.notes,
+			notesToShow: this.state.notesToShow
+		});
 	}
 
 	deleteNote(index) {
@@ -125,29 +133,32 @@ class GrandStaff extends React.Component {
 				</div>
 				<div>
 					{this.state.notes.map((note, i) => {return <Note name={note.name} key={i} index={i} changeSelection={this.changeSelection} changeNote={this.changeNote} deleteNote={this.deleteNote}/>})}
-					<div className="space" id="g5"></div>
-					<div className="line" id="f5"></div>
-					<div className="space" id="e5"></div>
-					<div className="line" id="d5"></div>
-					<div className="space" id="c5"></div>
-					<div className="line" id="b4"></div>
-					<div className="space" id="a4"></div>
-					<div className="line" id="g4"></div>
-					<div className="space" id="f4"></div>
-					<div className="line" id="e4"></div>
-					<div className="space" id="d4"></div>
-					<div className="ledger-line" id="c4"></div>
-					<div className="space" id="b3"></div>
-					<div className="line" id="a3"></div>
-					<div className="space" id="g3"></div>
-					<div className="line" id="f3"></div>
-					<div className="space" id="e3"></div>
-					<div className="line" id="d3"></div>
-					<div className="space" id="c3"></div>
-					<div className="line" id="b2"></div>
-					<div className="space" id="a2"></div>
-					<div className="line" id="g2"></div>
-					<div className="space" id="f2"></div>
+					<div className="ledger-line" id="a5" onClick={this.addNote}></div>
+					<div className="space" id="g5" onClick={this.addNote}></div>
+					<div className="line" id="f5" onClick={this.addNote}></div>
+					<div className="space" id="e5" onClick={this.addNote}></div>
+					<div className="line" id="d5" onClick={this.addNote}></div>
+					<div className="space" id="c5" onClick={this.addNote}></div>
+					<div className="line" id="b4" onClick={this.addNote}></div>
+					<div className="space" id="a4" onClick={this.addNote}></div>
+					<div className="line" id="g4" onClick={this.addNote}></div>
+					<div className="space" id="f4" onClick={this.addNote}></div>
+					<div className="line" id="e4" onClick={this.addNote}></div>
+					<div className="space" id="d4" onClick={this.addNote}></div>
+					<div className="ledger-line" id="c4" onClick={this.addNote}></div>
+					<div className="space" id="b3" onClick={this.addNote}></div>
+					<div className="line" id="a3" onClick={this.addNote}></div>
+					<div className="space" id="g3" onClick={this.addNote}></div>
+					<div className="line" id="f3" onClick={this.addNote}></div>
+					<div className="space" id="e3" onClick={this.addNote}></div>
+					<div className="line" id="d3" onClick={this.addNote}></div>
+					<div className="space" id="c3" onClick={this.addNote}></div>
+					<div className="line" id="b2" onClick={this.addNote}></div>
+					<div className="space" id="a2" onClick={this.addNote}></div>
+					<div className="line" id="g2" onClick={this.addNote}></div>
+					<div className="space" id="f2" onClick={this.addNote}></div>
+					<div className="ledger-line" id="e2" onClick={this.addNote}></div>
+
 				</div>
 				{this.state.notesToShow.map((name, i) => { return <NoteNameDisplay name={name} key={i}/> })}
 				<div className="playButtonContainer"><button id="playButton" onClick={this.playChord}>Play your chord!</button></div>

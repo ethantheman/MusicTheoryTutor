@@ -1,35 +1,37 @@
 .line {
-	border-top: 1px solid black;
+	border-top: 3px solid black;
 	width: 100%;
 	margin-top: 1%;
+	height: 3%;
 }
 
 .ledger-line {
-	border-top: 1px solid black; /* This should change from white to black only when there's a ledger-line note on the staff. */
+	border-top: 3px solid black; /* This should change from white to black only when there's a ledger-line note on the staff. */
 	width: 5%;
 	margin-top: 1%;
 	margin-left: 47.5%;
 }
 
 .space {
-	border-top: 1px solid white;
+	border-top: 3px solid white;
 	width: 100%;
+	height: 3%;
 	margin-top: 1%;
 }
 
 .trebleClef {
-	height: 24vh;
+	height: 23vh;
 	position: absolute;
 	z-index: 1;
-	top: 11vh;
+	top: 12vh;
 	left: 1%;
 }
 
 .bassClef {
-	height: 14vh;
+	height: 13vh;
 	position: absolute;
 	z-index: 1;
-	top: 37.5vh;
+	top: 37vh;
 	left: 1%;
 }
 
