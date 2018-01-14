@@ -1,7 +1,13 @@
+#title {
+	font-family: Courier;
+	font-size: 3vh;
+}
+
 .line {
 	border-top: 0.5vh solid black;
 	width: 100%;
 	margin-top: 1%;
+	cursor: pointer;
 }
 
 .ledger-line {
@@ -9,12 +15,14 @@
 	width: 5%;
 	margin-top: 1%;
 	margin-left: 47.5%;
+	cursor: pointer;
 }
 
 .space {
 	border-top: 0.5vh solid white;
 	width: 100%;
 	margin-top: 1%;
+	cursor: pointer;
 }
 
 .trebleClef {
@@ -43,6 +51,11 @@
 	left: 48.3%;
 	display:inline-block;
 	margin-top: -1%;
+	cursor: pointer;
+}
+
+.note:hover {
+	background: #4c4c4c;
 }
 
 .activeNote {
@@ -55,6 +68,11 @@
 	left: 48.3%;
 	display: inline-block;
 	margin-top: -1%;
+	cursor: pointer;
+}
+
+.activeNote:hover {
+	background: #990000;
 }
 
 .accidental {
@@ -98,8 +116,55 @@
   position: relative;
   font-weight: bold;
   font-size: 30px;
+  font-family: Courier;
 }
 
+.intervalDisplay {
+	height: auto;
+	width: 100%;
+	border: 3px solid black;
+	text-align: center;
+	float: right;
+	font-family: Courier;
+	font-size: 16px;
+}
+
+#intervalDisplayContainer {
+	float: right;
+	width: 35%;
+	display: inline-block;
+}
+
+#noteNameDisplayContainer {
+	float: left;
+	display: inline-block;
+}
+
+#playButtonContainer {
+	width: 10%;
+	margin-left: 45%;
+	margin-top: 1%;
+	/*border: 3px solid red;*/
+	/*border-radius: 10%;*/
+	/*display: inline-block;*/
+}
+
+#playButton {
+	width: 100%;
+	height: 10vh;
+	background-color: #FF0000;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 3px;
+	font-size: 16px;
+	font-family: Courier;
+	outline: none;
+}
+
+#playButton:hover {
+	background-color: #990000;
+}
 
 h1 {
 	text-align: center;

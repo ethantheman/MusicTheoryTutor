@@ -181,9 +181,17 @@ class GrandStaff extends React.Component {
 					<div className="space" id="f2" onClick={this.addNote}></div>
 					<div className="ledger-line" id="e2" onClick={this.addNote}></div>
 				</div>
-				{this.sortDescendingNotes(this.state.notesToDisplay).map((name, i) => { return <NoteNameDisplay name={name} key={i} selectedNotes={this.state.selectedNotes} notes={this.state.notes} addToInterval={this.addNoteToInterval}/> })}
-				<div className="playButtonContainer"><button id="playButton" onClick={this.playChord}>Play your chord!</button></div>
-				<IntervalDisplay selectedNotes={this.state.selectedNotes} notes={this.state.notes}/>
+				<div>
+					<div id="noteNameDisplayContainer">
+						{this.sortDescendingNotes(this.state.notesToDisplay).map((name, i) => { return <NoteNameDisplay name={name} key={i} selectedNotes={this.state.selectedNotes} notes={this.state.notes} addToInterval={this.addNoteToInterval}/> })}
+					</div>
+					<div id="intervalDisplayContainer">
+						<IntervalDisplay selectedNotes={this.state.selectedNotes} notes={this.state.notes} sort={this.sortDescendingNotes}/>
+					</div>
+				</div>
+				<div id="playButtonContainer">
+					<button id="playButton" onClick={this.playChord}>Play your chord!</button>
+				</div>
 			</div>
 			);
 	}

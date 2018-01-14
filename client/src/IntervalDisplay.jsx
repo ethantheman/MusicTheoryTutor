@@ -20,15 +20,18 @@ class IntervalDisplay extends React.Component {
 
 		if ( notes.length > 1 ) { // must have at least two notes selected
 			let tuples = []; // will hold pairs of notes
-			for ( var i = 0; i < notes.length-1; i++ ) {
-				for ( var j = i+1; j < notes.length; j++ ) {
-					tuples.push([notes[i], notes[j]]);
-				}
+
+			// before generating tuples, sort notes in ascending order:
+			notes = this.props.sort(notes).reverse(); // reverse because the props sort function puts it in descending order.
+
+			for ( var i = 0; i < notes.length-1; i++ ) { // each tuple contains a note and the next highest note in the chord.
+				tuples.push([notes[i], notes[i+1]]);
 			}
 			let result = [];
 			tuples.forEach(tuple => {
 				result.push(tuple[0] + ' - ' + tuple[1] + ': ' + this.getInterval(tuple[0], tuple[1]));
-			})
+			});
+			console.log('result: ', result);
 			return result;
 		} else {
 			return null;
@@ -47,19 +50,20 @@ class IntervalDisplay extends React.Component {
 				j = k;
 			}
 		}
-		if ( i && j ) {
+
+		if ( i >= 0 && j >= 0 ) {
 			if ( j - i > 0 && (j - i) % 12 === 0 || i - j > 0 && (i - j) % 12 === 0 ) {
 				return intervals[12]; // get octaves before using % 12 - otherwise it will return unison (0) instead of octave (12).
 			} else {
-				return j - i >= 0 ? intervals[(j - i) % 12] : intervals[(i - j) % 12];
+				return j - i >= 0 ? intervals[(j - i) % 12] : intervals[(i - j) % 12]
 			}
 		}
 	}
 
 	render() {
-		return (<div className="intervalDisplay">
-							<h3>Displaying intervals for the following notes: </h3>
-							<ul>{this.getAllIntervals() ? this.getAllIntervals().map((interval, i) => <li key={i}>{interval}</li>) : null}</ul>
+		return this.getAllIntervals() === null ? <div className="intervalDisplay"><h3>Add and select notes above to see the interval between them.</h3></div> : (<div className="intervalDisplay">
+							<h3>The intervals in your selection are: </h3>
+							<ul>{this.getAllIntervals().map((interval, i) => <li key={i}>{interval}</li>)}</ul>
 						</div>
 						);
 	}
