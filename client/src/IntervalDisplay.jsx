@@ -57,7 +57,6 @@ class IntervalDisplay extends React.Component {
 	}
 
 	render() {
-		console.log('intervals: ', this.getAllIntervals());
 		return (<div className="intervalDisplay">
 							<h3>Displaying intervals for the following notes: </h3>
 							<ul>{this.getAllIntervals() ? this.getAllIntervals().map((interval, i) => <li key={i}>{interval}</li>) : null}</ul>

@@ -5,6 +5,7 @@ import NoteNameDisplay from './NoteNameDisplay.jsx';
 import IntervalDisplay from './IntervalDisplay.jsx';
 import $ from 'jquery';
 var Wad = require('web-audio-daw');
+var chromatic = require('./chromatic.js').chromatic;
 
 class GrandStaff extends React.Component {
 	constructor(props) {
@@ -20,6 +21,35 @@ class GrandStaff extends React.Component {
 		this.playChord = this.playChord.bind(this);
 		this.getNotesToDisplay = this.getNotesToDisplay.bind(this);
 		this.addNote = this.addNote.bind(this);
+		this.sortDescendingNotes = this.sortDescendingNotes.bind(this);
+	}
+
+	sortDescendingNotes(arr) {
+		// take array of note names and return sorted from lowest to highest.
+		// each note is of format "C4", "Bb4", etc.
+		// use the chromatic indices of each note to determine the sort order.
+		return arr.sort((x, y) => {
+			let idx1, idx2;
+			for ( var i = 0; i < chromatic.length; i++ ) {
+				if ( chromatic[i].includes(x) ) {
+					idx1 = i;
+				}
+				if ( chromatic[i].includes(y) ) {
+					idx2 = i;
+				}
+			}
+
+			// sort:
+			if ( idx1 < idx2 ) {
+				return 1;
+			}
+
+			if ( idx1 > idx2 ) {
+				return -1;
+			}
+
+			return 0;
+		});
 	}
 
 	addNote(e) {
@@ -117,7 +147,6 @@ class GrandStaff extends React.Component {
 	}
 
 	render() {
-		console.log('interval: ', this.state.intervalToDisplay);
 		return (
 			<div>
 				<div>
@@ -152,7 +181,7 @@ class GrandStaff extends React.Component {
 					<div className="space" id="f2" onClick={this.addNote}></div>
 					<div className="ledger-line" id="e2" onClick={this.addNote}></div>
 				</div>
-				{this.state.notesToDisplay.slice(0).reverse().map((name, i) => { return <NoteNameDisplay name={name} key={i} selectedNotes={this.state.selectedNotes} notes={this.state.notes} addToInterval={this.addNoteToInterval}/> })}
+				{this.sortDescendingNotes(this.state.notesToDisplay).map((name, i) => { return <NoteNameDisplay name={name} key={i} selectedNotes={this.state.selectedNotes} notes={this.state.notes} addToInterval={this.addNoteToInterval}/> })}
 				<div className="playButtonContainer"><button id="playButton" onClick={this.playChord}>Play your chord!</button></div>
 				<IntervalDisplay selectedNotes={this.state.selectedNotes} notes={this.state.notes}/>
 			</div>
