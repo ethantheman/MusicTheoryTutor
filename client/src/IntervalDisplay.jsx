@@ -25,7 +25,11 @@ class IntervalDisplay extends React.Component {
 					tuples.push([notes[i], notes[j]]);
 				}
 			}
-			return tuples;
+			let result = [];
+			tuples.forEach(tuple => {
+				result.push(tuple[0] + ' - ' + tuple[1] + ': ' + this.getInterval(tuple[0], tuple[1]));
+			})
+			return result;
 		} else {
 			return null;
 		}
@@ -56,7 +60,7 @@ class IntervalDisplay extends React.Component {
 		console.log('intervals: ', this.getAllIntervals());
 		return (<div className="intervalDisplay">
 							<h3>Displaying intervals for the following notes: </h3>
-							<ul>{this.props.selectedNotes.map((index, i) => <li key={i}>{this.props.notes[index].name}</li>)}</ul>
+							<ul>{this.getAllIntervals() ? this.getAllIntervals().map((interval, i) => <li key={i}>{interval}</li>) : null}</ul>
 						</div>
 						);
 	}
