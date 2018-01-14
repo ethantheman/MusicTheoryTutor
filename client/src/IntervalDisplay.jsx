@@ -6,9 +6,7 @@ let intervals = require('./chromatic.js').intervals;
 class IntervalDisplay extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			selected: false
-		}
+
 		this.getInterval = this.getInterval.bind(this);
 	}
 
@@ -34,10 +32,8 @@ class IntervalDisplay extends React.Component {
 
 	render() {
 		return (<div className="intervalDisplay">
-							{this.props.interval.length === 2 ?
-								<h3>The interval between <span>{this.props.interval[0]}</span> and <span>{this.props.interval[1]}</span> is: {this.getInterval(this.props.interval[0], this.props.interval[1])}</h3>
-								: <h3>Select any two notes in the boxes above to get the interval between them.</h3>
-							}
+							<h3>Displaying intervals for the following notes: </h3>
+							<ul>{this.props.selectedNotes.map((index, i) => <li key={i}>{this.props.notes[index].name}</li>)}</ul>
 						</div>
 						);
 	}

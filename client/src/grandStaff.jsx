@@ -12,8 +12,7 @@ class GrandStaff extends React.Component {
 		this.state = {
 			notes: [], // should initialize as empty array, use these for testing...
 			selectedNotes: [],
-			notesToDisplay: [],
-			intervalToDisplay: []
+			notesToDisplay: []
 		}
 		this.changeNote = this.changeNote.bind(this);
 		this.changeSelection = this.changeSelection.bind(this);
@@ -21,24 +20,6 @@ class GrandStaff extends React.Component {
 		this.playChord = this.playChord.bind(this);
 		this.getNotesToDisplay = this.getNotesToDisplay.bind(this);
 		this.addNote = this.addNote.bind(this);
-		this.addNoteToInterval = this.addNoteToInterval.bind(this);
-	}
-
-	addNoteToInterval(note, cb) {
-		// only add the note if it's not already in array. if it is already in the array, remove it.
-		// cb from child updates noteNameDisplay state to paint border red when it is selected.
-		let a = this.state.intervalToDisplay;
-		if ( a.includes(note) ) {
-			a.splice(a.indexOf(note), 1);
-			this.setState({intervalToDisplay: a}, cb(false));
-		} else {
-			if ( a.length < 2 ) { // only two notes should be in array at a time.
-				a.push(note);
-				this.setState({intervalToDisplay: a}, cb(true));
-			} else {
-				alert('you must remove a note from the interval before adding another.');
-			}
-		}
 	}
 
 	addNote(e) {
@@ -58,18 +39,17 @@ class GrandStaff extends React.Component {
 		n[index].deleted = true;
 		this.setState({notes: n});
 
-		// remove note from notesToDisplay
+		// remove note from notesToDisplay and selectedNotes
 		let noteToDelete = this.state.notes[index].name;
 		let found = this.state.notesToDisplay.indexOf(noteToDelete);
 		if (found >= 0) {
 			this.state.notesToDisplay.splice(found, 1);
 			this.setState({
 				notesToDisplay: this.state.notesToDisplay
-			}, () => { // delete note from intervalToDisplay if necessary
-				if ( this.state.intervalToDisplay.includes(this.state.notes[index].name) ) {
-					this.state.intervalToDisplay.splice(this.state.intervalToDisplay.indexOf(this.state.notes[index].name), 1);
-					this.setState({intervalToDisplay: this.state.intervalToDisplay});
-				}
+			}, () => {
+				// console.log('deleting', this.state.notes[index], , 'from selected notes...');
+				this.state.selectedNotes.splice(this.state.selectedNotes.indexOf(index), 1);
+				this.setState({selectedNotes: this.state.selectedNotes});
 			});
 		}
 	}
@@ -84,17 +64,12 @@ class GrandStaff extends React.Component {
 		}, () => {
 			this.setState({
 				notesToDisplay: this.getNotesToDisplay()
-			}, () => { // update interval display if necessary:
-				if ( this.state.intervalToDisplay.includes(oldNote) ) {
-					this.state.intervalToDisplay[this.state.intervalToDisplay.indexOf(oldNote)] = newNote;
-					this.setState({intervalToDisplay: this.state.intervalToDisplay});
-				}
 			});
 		});
 	}
 
 	changeSelection(index, bool) {
-		if ( bool ) {
+		if ( bool ) { // add note to set of selected notes
 			let s = this.state.selectedNotes;
 			s.push(index);
 			this.setState({
@@ -102,12 +77,12 @@ class GrandStaff extends React.Component {
 			}, () => {
 				console.log(this.state.selectedNotes);
 			});
-		} else {
+		} else { // remove note from set of selected notes
 			let s = this.state.selectedNotes;
 			let x = [];
 			s.forEach(el => {
 				el === index ? null : x.push(el);
-			})
+			});
 			this.setState({
 				selectedNotes: x
 			}, () => {
@@ -177,9 +152,9 @@ class GrandStaff extends React.Component {
 					<div className="space" id="f2" onClick={this.addNote}></div>
 					<div className="ledger-line" id="e2" onClick={this.addNote}></div>
 				</div>
-				{this.state.notesToDisplay.slice(0).reverse().map((name, i) => { return <NoteNameDisplay name={name} key={i} addToInterval={this.addNoteToInterval}/> })}
+				{this.state.notesToDisplay.slice(0).reverse().map((name, i) => { return <NoteNameDisplay name={name} key={i} selectedNotes={this.state.selectedNotes} notes={this.state.notes} addToInterval={this.addNoteToInterval}/> })}
 				<div className="playButtonContainer"><button id="playButton" onClick={this.playChord}>Play your chord!</button></div>
-				<IntervalDisplay interval={this.state.intervalToDisplay}/>
+				<IntervalDisplay selectedNotes={this.state.selectedNotes} notes={this.state.notes}/>
 			</div>
 			);
 	}

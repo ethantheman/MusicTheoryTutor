@@ -1,7 +1,4 @@
-1. Create an IntervalDisplay component to display the interval between two notes
-	- write the function that calculates # of half-steps using the chromatic scale and then maps to appropriate interval
-		- make sure to handle the difference between Augmented 4th and Diminished 5th depending on spelling (i.e. C -> F# vs. C -> Gb).
-	- when three notes are on the staff, there should be three interval displays (eg. C-E, E-G, and C-G), four - four, etc.
+1. Create an IntervalDisplay component to display the interval between two notes:
 	- write a function to convert the intervals into chord names/inversions and display the chord name when three or more notes are present.
 2. Implement a database using PostGres or firebase to store chords in a list
 	- add a save button: onClick saves it to database
