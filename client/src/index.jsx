@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import $ from "jquery";
 import axios from "axios";
 import GrandStaff from "./GrandStaff.jsx";
-import ChordList from "./ChordList.jsx";
 import * as firebase from 'firebase';
 
 var config = {
@@ -26,6 +25,30 @@ class App extends React.Component {
 			chords: []
 		}
 		this.saveChord = this.saveChord.bind(this);
+		this.writeData = this.writeData.bind(this);
+		this.readData = this.readData.bind(this);
+	}
+
+	writeData(arr) {
+		arr.forEach(obj => {
+			db.ref('chords/' + obj.name).set({
+				name: obj.name,
+				notes: obj.notes
+			});
+		});
+	}
+
+	readData() {
+		// get data from firebase and use it to set state.
+		db.ref('/chords').on('value', (chords) => {
+			let c = [];
+			let dbChords = chords.val()
+			for ( var chord in dbChords ) {
+				c.push(dbChords[chord]);
+			}
+			this.setState({chords: c});
+		});
+
 	}
 
 	saveChord(c) {
@@ -36,8 +59,12 @@ class App extends React.Component {
 			console.log('new chords: ', this.state.chords);
 		});
 
-		// save it to database as well...
+		// save it to database as well:
+		this.writeData(this.state.chords);
+	}
 
+	componentWillMount() {
+		this.readData();
 	}
 
 	render() {
@@ -47,7 +74,7 @@ class App extends React.Component {
 					<h1 id="title">Ethan's Chord Builder</h1>
 				</div>
 				<br />
-				<GrandStaff saveChord={this.saveChord}/>
+				<GrandStaff saveChord={this.saveChord} chords={this.state.chords}/>
 			</div>
 		);
 	}

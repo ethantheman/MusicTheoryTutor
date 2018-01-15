@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Note from "./Note.jsx";
 import NoteNameDisplay from "./NoteNameDisplay.jsx";
 import IntervalDisplay from "./IntervalDisplay.jsx";
+import ChordList from './ChordList.jsx';
 import $ from "jquery";
 var Wad = require("web-audio-daw");
 var chromatic = require("./chromatic.js").chromatic;
@@ -23,6 +24,7 @@ class GrandStaff extends React.Component {
 		this.addNote = this.addNote.bind(this);
 		this.sortAscendingNotes = this.sortAscendingNotes.bind(this);
 		this.saveChord = this.saveChord.bind(this);
+		this.changeChord = this.changeChord.bind(this);
 	}
 
 	sortAscendingNotes(arr) {
@@ -148,6 +150,27 @@ class GrandStaff extends React.Component {
 		this.props.saveChord({name: name, notes: chord});
 	}
 
+	changeChord(name) {
+		// lookup notes in new chord using this.props.chords:
+		let newChordNotes = [];
+		let currentNotes = this.state.notes.slice();
+		this.props.chords.forEach(obj => {
+			if ( obj.name === name ) {
+				newChordNotes = obj.notes;
+			}
+		});
+		console.log('new notes: ', newChordNotes);
+		newChordNotes.forEach(note => {
+			currentNotes.push({"name": note, "deleted": false});
+		})
+		// render new chords to staff:
+		this.setState({
+			notes: currentNotes,
+			notesToDisplay: newChordNotes
+		});
+		// console.log('changing chord to: ', name);
+	}
+
 	componentWillMount() {
 		this.setState({
 			notesToDisplay: this.state.notes.map(obj => obj.name)
@@ -165,6 +188,7 @@ class GrandStaff extends React.Component {
 	render() {
 		return (
 			<div>
+				<ChordList chords={this.props.chords} changeChord={this.changeChord} />
 				<div id="saveButtonContainer">
 						{this.state.notesToDisplay.length === 0 ? null 
 							: <div>
