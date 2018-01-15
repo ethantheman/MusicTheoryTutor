@@ -1,6 +1,13 @@
 #title {
 	font-family: Courier;
 	font-size: 3vh;
+	display: inline-block;
+	margin-left: 40%;
+}
+
+#saveButtonContainer {
+	display: inline-block;
+	float: right;
 }
 
 .line {
@@ -29,7 +36,7 @@
 	height: 28vh;
 	position: absolute;
 	z-index: 1;
-	top: 14vh;
+	top: 15vh;
 	left: 1%;
 }
 
@@ -37,19 +44,19 @@
 	height: 18vh;
 	position: absolute;
 	z-index: 1;
-	top: 45vh;
+	top: 47vh;
 	left: 1%;
 }
 
 .note {
-	position: absolute;	
+	position: absolute;
 	width: 3.5%;
 	height: 3.5%;
 	background: #000000;
 	z-index: 1;
 	border-radius: 50%;
 	left: 48.3%;
-	display:inline-block;
+	display: inline-block;
 	margin-top: -1%;
 	cursor: pointer;
 }
@@ -59,7 +66,7 @@
 }
 
 .activeNote {
-	position: absolute;	
+	position: absolute;
 	width: 3.5%;
 	height: 3.5%;
 	z-index: 1;
@@ -81,11 +88,11 @@
 }
 
 #flat {
-  transform: translate(3.5vh, -4.8vh);
+	transform: translate(3.5vh, -4.8vh);
 }
 
 #sharp {
-  transform: translate(3.8vh, -3vh);
+	transform: translate(3.8vh, -3vh);
 }
 
 .accidentalContainer {
@@ -93,30 +100,32 @@
 	position: absolute;
 	display: inline-block;
 	left: 44%;
-  z-index: 2;
+	z-index: 2;
 }
 
 .noteNameContainer {
 	height: 50px;
 	width: 75px;
 	border: 0.5vh solid black;
-	margin-bottom: 0.2vh;
+	margin-right: 0.1vh;
+	display: inline-block;
 }
 
 .activeNoteNameContainer {
 	height: 50px;
 	width: 75px;
 	border: 0.5vh solid red;
-	margin-bottom: 0.2vh;
+	margin-right: 0.1vh;
+	display: inline-block;
 }
 
 .noteName {
 	width: 50%;
 	margin: 0 auto;
-  position: relative;
-  font-weight: bold;
-  font-size: 30px;
-  font-family: Courier;
+	position: relative;
+	font-weight: bold;
+	font-size: 30px;
+	font-family: Courier;
 }
 
 .intervalDisplay {
@@ -137,22 +146,25 @@
 
 #noteNameDisplayContainer {
 	float: left;
+	width: 35%;
+	font-family: Courier;
+	font-size: 16px;
+	text-align: center;
+	border: 3px solid black;
 	display: inline-block;
+	height: auto;
 }
 
 #playButtonContainer {
 	width: 10%;
 	margin-left: 45%;
-	margin-top: 1%;
-	/*border: 3px solid red;*/
-	/*border-radius: 10%;*/
-	/*display: inline-block;*/
+	margin-top: 2%;
 }
 
 #playButton {
 	width: 100%;
 	height: 10vh;
-	background-color: #FF0000;
+	background-color: #ff0000;
 	color: white;
 	text-align: center;
 	cursor: pointer;
@@ -166,6 +178,18 @@
 	background-color: #990000;
 }
 
+#playButton:active {
+	background-color: #660000;
+}
+
+#displayContainer {
+	margin-top: 2%;
+}
+
 h1 {
 	text-align: center;
+}
+
+ul {
+	list-style: none;
 }

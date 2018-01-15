@@ -1,13 +1,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // This file sets up the chromatic scale which will be used to display the notes on the staff.
-// In the chromatic array, the values in each tuple represent enharmonic options spellings of each note. 
+// In the chromatic array, the values in each tuple represent enharmonic options spellings of each note.
 // Use tuple[0] for ascending context and use tuple[1] for descending context. I have decided to leave
 // out Fb and Cb as a stylistic choice, opting for enharmonic spellings E and B.
 //
 // Each index in the intervals array represents one half step, (i.e. one step on the chromatic scale).
 // the number of half steps between any two notes determines the interval between those two notes.
-// For 
+// For
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const chromatic = [
@@ -57,18 +57,18 @@ const chromatic = [
 
 const intervals = [
 	"unison",
-	 "minor 2nd", 
-	 "Major 2nd", 
-	 "minor 3rd", 
-	 "Major 3rd", 
-	 "Perfect 4th", 
-	 "tritone", 
-	 "Perfect 5th", 
-	 "minor 6th", 
-	 "Major 6th", 
-	 "minor 7th", 
-	 "Major 7th", 
-	 "octave"
+	"minor 2nd",
+	"Major 2nd",
+	"minor 3rd",
+	"Major 3rd",
+	"Perfect 4th",
+	"tritone",
+	"Perfect 5th",
+	"minor 6th",
+	"Major 6th",
+	"minor 7th",
+	"Major 7th",
+	"octave"
 ];
 
 module.exports.chromatic = chromatic;
