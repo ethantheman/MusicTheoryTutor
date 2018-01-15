@@ -29,23 +29,23 @@ class App extends React.Component {
 	}
 
 	saveChord(c) {
-		this.state.chords.push(c);
-		this.setState({chords: this.state.chords});
+		let newChords = this.state.chords;
+		newChords.push(c);
+
+		this.setState({chords: newChords}, () => {
+			console.log('new chords: ', this.state.chords);
+		});
+
 		// save it to database as well...
 
 	}
 
 	render() {
-		console.log(this.state.chords);
 		return (
 			<div>
 				<div>
 					<h1 id="title">Ethan's Chord Builder</h1>
-					<div id="saveButtonContainer">
-						<button id="saveButton" onClick={this.saveChord}>Save This Chord</button>
-					</div>
 				</div>
-				<ChordList chords={this.state.chords}/>
 				<br />
 				<GrandStaff saveChord={this.saveChord}/>
 			</div>

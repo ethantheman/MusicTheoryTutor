@@ -20,7 +20,6 @@ class ChordList extends React.Component {
 	render() {
 		return (
 			<div className="chordListContainer">
-				<Dropdown className="chordList" options={this.props.chords} onChange={this.selectChord} placeholder="Select a chord"/>
 			</div>
 		);
 	}

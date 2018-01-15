@@ -144,14 +144,14 @@ class GrandStaff extends React.Component {
 
 	saveChord() {
 		let chord = this.state.notesToDisplay;
-		this.props.saveChord(chord);
+		let name = $('#chordName').val();
+		this.props.saveChord({name: name, notes: chord});
 	}
 
 	componentWillMount() {
 		this.setState({
 			notesToDisplay: this.state.notes.map(obj => obj.name)
 		});
-		// $('#saveButtonContainer').append($(''));
 	}
 
 	getNotesToDisplay() {
@@ -165,6 +165,13 @@ class GrandStaff extends React.Component {
 	render() {
 		return (
 			<div>
+				<div id="saveButtonContainer">
+						{this.state.notesToDisplay.length === 0 ? null 
+							: <div>
+									<input id="chordName" placeholder="name your chord!"></input>
+									<button id="saveButton" onClick={this.saveChord}>Save This Chord</button>
+								</div>}
+				</div>
 				<div>
 					<img src="images/treble.png" className="trebleClef" />
 					<img src="images/Bass.png" className="bassClef" />
