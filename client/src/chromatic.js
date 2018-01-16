@@ -71,5 +71,35 @@ const intervals = [
 	"octave"
 ];
 
+const triads = {
+	// this obj stores the ascending intervals for each quality
+	// of triad in each possible inversion.
+
+	"root": {
+		"major": ["Major 3rd", "minor third"],
+		"minor": ["minor 3rd", "Major 3rd"],
+		"augmented": ["Major 3rd", "Major 3rd"],
+		"diminished": ["minor 3rd", "minor 3rd"]
+	},
+
+	"first inversion": {
+		"major": ["minor 3rd", "Perfect 4th"],
+		"minor": ["Major 3rd", "Perfect 4th"],
+		"augmented": ["Major 3rd", "Major 3rd"],
+		"diminished": ["minor 3rd", "tritone"]
+	},
+
+	"second inversion": {
+		"major": ["Perfect 4th", "Major 3rd"],
+		"minor": ["Perfect 4th", "minor 3rd"],
+		"augmented": ["Major 3rd", "Major 3rd"],
+		"diminished": ["tritone", "minor 3rd"]
+	}
+
+}
+
+
+
 module.exports.chromatic = chromatic;
 module.exports.intervals = intervals;
+module.exports.triads = triads;

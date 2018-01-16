@@ -12,7 +12,7 @@ class GrandStaff extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notes: [], // should initialize as empty array, use these for testing...
+			notes: [],
 			selectedNotes: [],
 			notesToDisplay: []
 		};
@@ -27,31 +27,6 @@ class GrandStaff extends React.Component {
 		this.changeChord = this.changeChord.bind(this);
 	}
 
-	sortAscendingNotes(arr) {
-		// take array of note names and return sorted from lowest to highest.
-		return arr.sort((x, y) => {
-			let idx1, idx2;
-			for (var i = 0; i < chromatic.length; i++) {
-				if (chromatic[i].includes(x)) {
-					idx1 = i;
-				}
-				if (chromatic[i].includes(y)) {
-					idx2 = i;
-				}
-			}
-
-			// sort:
-			if (idx1 < idx2) {
-				return -1;
-			}
-
-			if (idx1 > idx2) {
-				return 1;
-			}
-
-			return 0;
-		});
-	}
 
 	addNote(e) {
 		let newNote = { name: e.target.id.toUpperCase(), deleted: false };
@@ -63,32 +38,41 @@ class GrandStaff extends React.Component {
 		});
 	}
 
-	deleteNote(index) {
-		// flip deleted flag on note at index
-		let n = this.state.notes;
-		n[index].deleted = true;
-		this.setState({ notes: n });
-
-		// remove note from notesToDisplay and selectedNotes
-		let noteToDelete = this.state.notes[index].name;
-		let found = this.state.notesToDisplay.indexOf(noteToDelete);
-		if (found >= 0) {
-			this.state.notesToDisplay.splice(found, 1);
-			this.setState(
-				{
-					notesToDisplay: this.state.notesToDisplay
-				},
-				() => {
-					this.state.selectedNotes.splice(
-						this.state.selectedNotes.indexOf(index),
-						1
-					);
-					this.setState({ selectedNotes: this.state.selectedNotes });
+	changeChord(name) { // THIS FEATURE NEEDS TO BE FIXED!
+		// changing chord is equivalent to deleting all notes in currently displayed notes
+		// and adding new notes to the staff.
+		// so, first need to call deleteNotes on all currently displayed notes.
+		let notes = this.state.notesToDisplay.slice();
+		notes.forEach(note => {
+			// get index of note in this.state.notes
+			// let index = -1; 
+			this.state.notes.forEach((obj, index) => {
+				if ( obj.deleted === false && obj.name === note ) {
+					this.deleteNote(index)
 				}
-			);
-		}
-	}
+			})
+		})
 
+		// next, lookup notes in new chord using this.props.chords:
+		let newChordNotes = [];
+		let currentNotes = this.state.notes.slice();
+		this.props.chords.forEach(obj => {
+			if ( obj.name === name ) {
+				newChordNotes = obj.notes;
+			}
+		});
+		console.log('new notes: ', newChordNotes);
+		newChordNotes.forEach(note => {
+			currentNotes.push({"name": note, "deleted": false});
+		});
+		// render new chord to staff:
+		this.setState({
+			notes: currentNotes,
+			notesToDisplay: newChordNotes
+		});
+		// console.log('changing chord to: ', name);
+	}
+	
 	changeNote(oldNote, newNote, index) {
 		// this function updates the note at parameter index.
 		let n = this.state.notes;
@@ -129,6 +113,39 @@ class GrandStaff extends React.Component {
 				});
 		}
 	}
+	
+	deleteNote(index) {
+		// flip deleted flag on note at index
+		let n = this.state.notes;
+		n[index].deleted = true;
+		this.setState({ notes: n });
+
+		// remove note from notesToDisplay and selectedNotes
+		let noteToDelete = this.state.notes[index].name;
+		let found = this.state.notesToDisplay.indexOf(noteToDelete);
+		if (found >= 0) {
+			this.state.notesToDisplay.splice(found, 1);
+			this.setState(
+				{
+					notesToDisplay: this.state.notesToDisplay
+				},
+				() => {
+					this.state.selectedNotes.splice(
+						this.state.selectedNotes.indexOf(index),
+						1
+					);
+					this.setState({ selectedNotes: this.state.selectedNotes });
+				}
+			);
+		}
+	}
+
+	getNotesToDisplay() {
+		return this.state.notes
+			.filter(note => note.deleted === false)
+			.map(obj => obj.name);
+	}
+
 
 	playChord() {
 		// use the web audio daw to play all the notes on the staff.
@@ -150,25 +167,30 @@ class GrandStaff extends React.Component {
 		this.props.saveChord({name: name, notes: chord});
 	}
 
-	changeChord(name) {
-		// lookup notes in new chord using this.props.chords:
-		let newChordNotes = [];
-		let currentNotes = this.state.notes.slice();
-		this.props.chords.forEach(obj => {
-			if ( obj.name === name ) {
-				newChordNotes = obj.notes;
+	sortAscendingNotes(arr) {
+		// take array of note names and return array sorted from lowest to highest.
+		return arr.sort((x, y) => {
+			let idx1, idx2;
+			for (var i = 0; i < chromatic.length; i++) {
+				if (chromatic[i].includes(x)) {
+					idx1 = i;
+				}
+				if (chromatic[i].includes(y)) {
+					idx2 = i;
+				}
 			}
+
+			// sort:
+			if (idx1 < idx2) {
+				return -1;
+			}
+
+			if (idx1 > idx2) {
+				return 1;
+			}
+
+			return 0;
 		});
-		console.log('new notes: ', newChordNotes);
-		newChordNotes.forEach(note => {
-			currentNotes.push({"name": note, "deleted": false});
-		})
-		// render new chords to staff:
-		this.setState({
-			notes: currentNotes,
-			notesToDisplay: newChordNotes
-		});
-		// console.log('changing chord to: ', name);
 	}
 
 	componentWillMount() {
@@ -177,11 +199,6 @@ class GrandStaff extends React.Component {
 		});
 	}
 
-	getNotesToDisplay() {
-		return this.state.notes
-			.filter(note => note.deleted === false)
-			.map(obj => obj.name);
-	}
 
 
 

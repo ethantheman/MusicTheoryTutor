@@ -2,15 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 let chromatic = require("./chromatic.js").chromatic;
 let intervals = require("./chromatic.js").intervals;
+let triads = require("./chromatic.js").triads;
 
 class IntervalDisplay extends React.Component {
 	constructor(props) {
 		super(props);
 		this.getAllIntervals = this.getAllIntervals.bind(this);
 		this.getInterval = this.getInterval.bind(this);
+		this.getChordQuality = this.getChordQuality.bind(this);
 	}
 
-	getAllIntervals() {
+	getAllIntervals() { //  
 		// call getInterval on each unique pair of notes.
 		// selectedNotes contains indices of each note in this.props.notes.
 		let notes = [];
@@ -45,6 +47,27 @@ class IntervalDisplay extends React.Component {
 		}
 	}
 
+	getChordQuality(arr) {
+		if ( arr === null ) {
+			return null;
+		} else {
+			let intervals = this.getAllIntervals("getChordQuality");
+			console.log('intervals: ', intervals);
+			/////////////////////////////////////////////////////////////////////
+			// 													TRIADS 
+			// example input: ["major third", "minor third"] => "major"
+			/////////////////////////////////////////////////////////////////////
+			// root pos:
+
+			
+
+			//////////////////////////////////////////////////////////////////////
+			// 													   7th chords 
+			// example input: ["major third", "minor third", "minor third"] => "7"
+			//////////////////////////////////////////////////////////////////////
+		}
+	}
+
 	getInterval(x, y) {
 		// this function uses the arrays from chromatic.js to calculate the interval between two notes.
 		let i, j, interval, octaves, result;
@@ -70,6 +93,7 @@ class IntervalDisplay extends React.Component {
 	}
 
 	render() {
+		this.getChordQuality();
 		return this.getAllIntervals() === null ? (
 			<div className="intervalDisplay">
 				<h3>Add and select notes to see the intervals between them.</h3>
