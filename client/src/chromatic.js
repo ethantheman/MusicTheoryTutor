@@ -75,8 +75,8 @@ const triads = {
 	// this obj stores the ascending intervals for each quality
 	// of triad in each possible inversion.
 
-	"root": {
-		"major": ["Major 3rd", "minor third"],
+	"root position": {
+		"major": ["Major 3rd", "minor 3rd"],
 		"minor": ["minor 3rd", "Major 3rd"],
 		"augmented": ["Major 3rd", "Major 3rd"],
 		"diminished": ["minor 3rd", "minor 3rd"]

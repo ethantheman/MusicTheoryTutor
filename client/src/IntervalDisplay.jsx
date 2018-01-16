@@ -47,17 +47,31 @@ class IntervalDisplay extends React.Component {
 		}
 	}
 
-	getChordQuality(arr) {
-		if ( arr === null ) {
+	getChordQuality() {
+		if ( this.getAllIntervals() === null ) {
 			return null;
 		} else {
-			let intervals = this.getAllIntervals("getChordQuality");
-			console.log('intervals: ', intervals);
+			let intervals = this.getAllIntervals().map(string => string.split(': '));
+			// intervals is an array of tuples - tuple[0] contains notes in the interval,
+			// and tuple[1] is the interval (i.e. 'minor 3rd')
+
 			/////////////////////////////////////////////////////////////////////
-			// 													TRIADS 
-			// example input: ["major third", "minor third"] => "major"
+			// 													TRIADS
+			// example input: ["Major 3rd", "minor 3rd"] => "major"
 			/////////////////////////////////////////////////////////////////////
-			// root pos:
+			if ( intervals.length === 2 ) {
+				// lookup potential matches in triads for each possible inversion:
+				let options = ["root position", "first inversion", "second inversion"];
+				// options.forEach((inversion) => {
+				for ( var i = 0; i < options.length; i++ ) {
+					var obj = triads[options[i]];
+					for ( var quality in obj ) {
+						if ( obj[quality].every((interval, i) => {return interval === intervals[i][1]})) {
+							return quality;
+						}
+					}
+				}
+			}
 
 			
 
@@ -66,6 +80,7 @@ class IntervalDisplay extends React.Component {
 			// example input: ["major third", "minor third", "minor third"] => "7"
 			//////////////////////////////////////////////////////////////////////
 		}
+		// return null;
 	}
 
 	getInterval(x, y) {
@@ -93,7 +108,8 @@ class IntervalDisplay extends React.Component {
 	}
 
 	render() {
-		this.getChordQuality();
+		console.log('chord quality: ', this.getChordQuality());
+		// this.getChordQuality();
 		return this.getAllIntervals() === null ? (
 			<div className="intervalDisplay">
 				<h3>Add and select notes to see the intervals between them.</h3>
