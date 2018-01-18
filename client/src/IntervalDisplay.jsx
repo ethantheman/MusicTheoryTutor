@@ -3,10 +3,14 @@ import ReactDOM from "react-dom";
 let chromatic = require("./chromatic.js").chromatic;
 let intervals = require("./chromatic.js").intervals;
 let triads = require("./chromatic.js").triads;
+let seventhChords = require("./chromatic.js").seventhChords;
 
 class IntervalDisplay extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			chord: "major"
+		}
 		this.getAllIntervals = this.getAllIntervals.bind(this);
 		this.getInterval = this.getInterval.bind(this);
 		this.getChordQuality = this.getChordQuality.bind(this);
@@ -47,7 +51,20 @@ class IntervalDisplay extends React.Component {
 		}
 	}
 
+	componentWillReceiveProps() {
+		let chord = this.getChordQuality();
+		if ( chord ) {
+			this.setState({
+				chord: chord
+			});
+		}
+	}
+
 	getChordQuality() {
+		// this function is working for triads and 7th chords in any inversion, but only
+		// for closed voicings (all notes must be in same octave, otherwise doesn't recognize
+		// the intervals in the chord. will need to add some functionality to handle wider voicings.)
+
 		if ( this.getAllIntervals() === null ) {
 			return null;
 		} else {
@@ -62,25 +79,33 @@ class IntervalDisplay extends React.Component {
 			if ( intervals.length === 2 ) {
 				// lookup potential matches in triads for each possible inversion:
 				let options = ["root position", "first inversion", "second inversion"];
-				// options.forEach((inversion) => {
 				for ( var i = 0; i < options.length; i++ ) {
 					var obj = triads[options[i]];
 					for ( var quality in obj ) {
 						if ( obj[quality].every((interval, i) => {return interval === intervals[i][1]})) {
-							return quality;
+							return 'quality: ' + quality + ' inversion: ' + options[i];
 						}
 					}
 				}
 			}
 
-			
-
 			//////////////////////////////////////////////////////////////////////
 			// 													   7th chords 
 			// example input: ["major third", "minor third", "minor third"] => "7"
 			//////////////////////////////////////////////////////////////////////
+			if ( intervals.length === 3 ) {
+				let options = ["root position", "first inversion", "second inversion", "third inversion"];
+				for ( var i = 0; i < options.length; i++ ) {
+					var obj = seventhChords[options[i]];
+					for ( var quality in obj ) {
+						if ( obj[quality].every((interval, i) => {return interval === intervals[i][1]})) {
+							return 'quality: ' + quality + ' inversion: ' + options[i];
+						}
+					}
+				}
+			}
 		}
-		// return null;
+		return 'not sure';
 	}
 
 	getInterval(x, y) {
@@ -108,8 +133,6 @@ class IntervalDisplay extends React.Component {
 	}
 
 	render() {
-		console.log('chord quality: ', this.getChordQuality());
-		// this.getChordQuality();
 		return this.getAllIntervals() === null ? (
 			<div className="intervalDisplay">
 				<h3>Add and select notes to see the intervals between them.</h3>
@@ -122,6 +145,13 @@ class IntervalDisplay extends React.Component {
 						<li key={i}>{interval}</li>
 					))}
 				</ul>
+				{this.state.chord ? 
+					<div>
+						<h3>The chord in your selection is: </h3>
+						<p>{this.state.chord}</p>
+					</div>
+					: null
+				}
 			</div>
 		);
 	}

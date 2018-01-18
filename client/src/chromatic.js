@@ -7,7 +7,10 @@
 //
 // Each index in the intervals array represents one half step, (i.e. one step on the chromatic scale).
 // the number of half steps between any two notes determines the interval between those two notes.
-// For
+// 
+// This file also sets up the intervals between notes in the chromatic scale, and uses those intervals
+// to establish the sets of intervals used to determine chord qualities in each possible inversion of 
+// triads, 7th chords, and beyond.
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const chromatic = [
@@ -98,8 +101,43 @@ const triads = {
 
 }
 
+const seventhChords = {
+	"root position": {
+		"major": ["Major 3rd", "minor 3rd", "Major 3rd"],
+		"dominant": ["Major 3rd", "minor 3rd", "minor 3rd"],
+		"minor": ["minor 3rd", "Major 3rd", "minor 3rd"],
+		"half-diminished": ["minor 3rd", "minor 3rd", "Major 3rd"],
+		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+	},
+
+	"first inversion": {
+		"major": ["minor 3rd", "Major 3rd", "minor 2nd"],
+		"dominant": ["minor 3rd", "minor 3rd", "Major 2nd"],
+		"minor": ["Major 3rd", "minor 3rd", "Major 2nd"],
+		"half-diminished": ["minor 3rd", "Major 3rd", "Major 2nd"],
+		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+	},
+
+	"second inversion": {
+		"major": ["Major 3rd", "minor 2nd", "Major 3rd"],
+		"dominant": ["minor 3rd", "Major 2nd", "Major 3rd"],
+		"minor": ["minor 3rd", "Major 2nd", "minor 3rd"],
+		"half-diminished": ["Major 3rd", "Major 2nd", "minor 3rd"],
+		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+	},
+
+	"third inversion": {
+		"major": ["minor 2nd", "Major 3rd", "minor 3rd"],
+		"dominant": ["Major 2nd", "Major 3rd", "minor 3rd"],
+		"minor": ["Major 2nd", "minor 3rd", "Major 3rd"],
+		"half-diminished": ["Major 2nd", "minor 3rd", "minor 3rd"],
+		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+	}
+}
+
 
 
 module.exports.chromatic = chromatic;
 module.exports.intervals = intervals;
 module.exports.triads = triads;
+module.exports.seventhChords = seventhChords;
