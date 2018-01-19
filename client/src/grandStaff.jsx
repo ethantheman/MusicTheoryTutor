@@ -24,7 +24,7 @@ class GrandStaff extends React.Component {
 		this.addNote = this.addNote.bind(this);
 		this.sortAscendingNotes = this.sortAscendingNotes.bind(this);
 		this.saveChord = this.saveChord.bind(this);
-		this.changeChord = this.changeChord.bind(this);
+		// this.changeChord = this.changeChord.bind(this);
 	}
 
 
@@ -38,40 +38,38 @@ class GrandStaff extends React.Component {
 		});
 	}
 
-	changeChord(name) { // THIS FEATURE NEEDS TO BE FIXED!
-		// changing chord is equivalent to deleting all notes in currently displayed notes
-		// and adding new notes to the staff.
-		// so, first need to call deleteNotes on all currently displayed notes.
-		let notes = this.state.notesToDisplay.slice();
-		notes.forEach(note => {
-			// get index of note in this.state.notes
-			// let index = -1; 
-			this.state.notes.forEach((obj, index) => {
-				if ( obj.deleted === false && obj.name === note ) {
-					this.deleteNote(index)
-				}
-			})
-		})
+	// changeChord(name) { // THIS FEATURE NEEDS TO BE FIXED!
+	// 	// changing chord is equivalent to deleting all notes in currently displayed notes
+	// 	// and adding new notes to the staff.
+	// 	// so, first need to call deleteNotes on all currently displayed notes.
+	// 	let notes = this.state.notesToDisplay.slice();
+	// 	notes.forEach(note => {
+	// 		this.state.notes.forEach((obj, index) => {
+	// 			if ( obj.deleted === false && obj.name === note ) {
+	// 				this.deleteNote(index)
+	// 			}
+	// 		})
+	// 	})
 
-		// next, lookup notes in new chord using this.props.chords:
-		let newChordNotes = [];
-		let currentNotes = this.state.notes.slice();
-		this.props.chords.forEach(obj => {
-			if ( obj.name === name ) {
-				newChordNotes = obj.notes;
-			}
-		});
-		console.log('new notes: ', newChordNotes);
-		newChordNotes.forEach(note => {
-			currentNotes.push({"name": note, "deleted": false});
-		});
-		// render new chord to staff:
-		this.setState({
-			notes: currentNotes,
-			notesToDisplay: newChordNotes
-		});
-		// console.log('changing chord to: ', name);
-	}
+	// 	// next, lookup notes in new chord using this.props.chords:
+	// 	let newChordNotes = [];
+	// 	let currentNotes = this.state.notes.slice();
+	// 	this.props.chords.forEach(obj => {
+	// 		if ( obj.name === name ) {
+	// 			newChordNotes = obj.notes;
+	// 		}
+	// 	});
+	// 	console.log('new notes: ', newChordNotes);
+	// 	newChordNotes.forEach(note => {
+	// 		currentNotes.push({"name": note, "deleted": false});
+	// 	});
+	// 	// render new chord to staff:
+	// 	this.setState({
+	// 		notes: currentNotes,
+	// 		notesToDisplay: newChordNotes
+	// 	});
+	// 	// console.log('changing chord to: ', name);
+	// }
 	
 	changeNote(oldNote, newNote, index) {
 		// this function updates the note at parameter index.
@@ -134,16 +132,18 @@ class GrandStaff extends React.Component {
 						this.state.selectedNotes.indexOf(index),
 						1
 					);
-					this.setState({ selectedNotes: this.state.selectedNotes });
+					this.setState({ selectedNotes: this.state.selectedNotes, notesToDisplay: this.getNotesToDisplay() });
 				}
 			);
 		}
 	}
 
 	getNotesToDisplay() {
-		return this.state.notes
+		let result = this.state.notes
 			.filter(note => note.deleted === false)
 			.map(obj => obj.name);
+		console.log('notes to display: ', result);
+		return result;
 	}
 
 
@@ -203,16 +203,17 @@ class GrandStaff extends React.Component {
 
 
 	render() {
+		console.log('notes: ', this.state.notes);
 		return (
 			<div>
-				<ChordList chords={this.props.chords} changeChord={this.changeChord} />
-				<div id="saveButtonContainer">
+				{/*<ChordList chords={this.props.chords} changeChord={this.changeChord} />*/}
+				{/*<div id="saveButtonContainer">
 						{this.state.notesToDisplay.length === 0 ? null 
 							: <div>
 									<input id="chordName" placeholder="name your chord!"></input>
 									<button id="saveButton" onClick={this.saveChord}>Save This Chord</button>
 								</div>}
-				</div>
+				</div>*/}
 				<div>
 					<img src="images/treble.png" className="trebleClef" />
 					<img src="images/Bass.png" className="bassClef" />

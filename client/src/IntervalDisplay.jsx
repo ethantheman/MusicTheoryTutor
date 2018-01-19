@@ -136,8 +136,8 @@ class IntervalDisplay extends React.Component {
 		return this.getAllIntervals() === null ? (
 			<div className="intervalDisplay">
 				<h3>Add and select notes to see the intervals between them.</h3>
-			</div>
-		) : (
+			</div>)
+		 : (
 			<div className="intervalDisplay">
 				<h3>The intervals in your selection are: </h3>
 				<ul>
