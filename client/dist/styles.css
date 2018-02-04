@@ -32,20 +32,35 @@
 	cursor: pointer;
 }
 
-.trebleClef {
-	height: 28vh;
-	position: absolute;
-	z-index: 1;
-	top: 16vh;
+#staffContainer {
+	width: 100%;
+	height: 80%;
+}
+
+#trebleContainer {
+	width: 10%;
+	height: 200px;
 	left: 1%;
+	top: 120px;
+	position: fixed;
+	z-index: 2;
+}
+
+.trebleClef {
+	height: 100%;
+}
+
+#bassContainer {
+	width: 10%;
+	height: 150px;
+	left: 1%;
+	top: 355px;
+	position: fixed;
+	z-index: 2;
 }
 
 .bassClef {
-	height: 18vh;
-	position: absolute;
-	z-index: 1;
-	top: 45.5vh;
-	left: 1%;
+	height: 100%;
 }
 
 .note {
@@ -106,7 +121,7 @@
 .noteNameContainer {
 	height: 50px;
 	width: 75px;
-	border: 0.5vh solid black;
+	border: 2.5px solid black;
 	margin-right: 0.1vh;
 	display: inline-block;
 }
@@ -114,7 +129,7 @@
 .activeNoteNameContainer {
 	height: 50px;
 	width: 75px;
-	border: 0.5vh solid red;
+	border: 2.5px solid red;
 	margin-right: 0.1vh;
 	display: inline-block;
 }
@@ -184,6 +199,7 @@
 
 #displayContainer {
 	margin-top: 2%;
+	margin-bottom: 2%;
 }
 
 h1 {

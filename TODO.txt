@@ -1,9 +1,0 @@
-1. Create an IntervalDisplay component to display the interval between two notes:
-	- write a function to convert the intervals into chord names/inversions and display the chord name when three or more notes are present.
-2. Implement a database using PostGres or firebase to store chords in a list
-	- add a save button: onClick saves it to database
-	- clicking on a list entry should render that chord to the grand staff
-	- updating the chord and saving should alter the chord at that list entry
-3. Deploy!
------------------------------------------------------ MVP-------------------------------------------------
-8. create a quiz mode

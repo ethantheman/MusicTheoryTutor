@@ -10,13 +10,14 @@ class IntervalDisplay extends React.Component {
 		super(props);
 		this.state = {
 			chord: "major"
-		}
+		};
 		this.getAllIntervals = this.getAllIntervals.bind(this);
 		this.getInterval = this.getInterval.bind(this);
 		this.getChordQuality = this.getChordQuality.bind(this);
 	}
 
-	getAllIntervals() { //  
+	getAllIntervals() {
+		//
 		// call getInterval on each unique pair of notes.
 		// selectedNotes contains indices of each note in this.props.notes.
 		let notes = [];
@@ -53,7 +54,7 @@ class IntervalDisplay extends React.Component {
 
 	componentWillReceiveProps() {
 		let chord = this.getChordQuality();
-		if ( chord ) {
+		if (chord) {
 			this.setState({
 				chord: chord
 			});
@@ -65,10 +66,10 @@ class IntervalDisplay extends React.Component {
 		// for closed voicings (all notes must be in same octave, otherwise doesn't recognize
 		// the intervals in the chord. will need to add some functionality to handle wider voicings.)
 
-		if ( this.getAllIntervals() === null ) {
+		if (this.getAllIntervals() === null) {
 			return null;
 		} else {
-			let intervals = this.getAllIntervals().map(string => string.split(': '));
+			let intervals = this.getAllIntervals().map(string => string.split(": "));
 			// intervals is an array of tuples - tuple[0] contains notes in the interval,
 			// and tuple[1] is the interval (i.e. 'minor 3rd')
 
@@ -76,36 +77,49 @@ class IntervalDisplay extends React.Component {
 			// 													TRIADS
 			// example input: ["Major 3rd", "minor 3rd"] => "major"
 			/////////////////////////////////////////////////////////////////////
-			if ( intervals.length === 2 ) {
+			if (intervals.length === 2) {
 				// lookup potential matches in triads for each possible inversion:
 				let options = ["root position", "first inversion", "second inversion"];
-				for ( var i = 0; i < options.length; i++ ) {
+				for (var i = 0; i < options.length; i++) {
 					var obj = triads[options[i]];
-					for ( var quality in obj ) {
-						if ( obj[quality].every((interval, i) => {return interval === intervals[i][1]})) {
-							return 'quality: ' + quality + ' inversion: ' + options[i];
+					for (var quality in obj) {
+						if (
+							obj[quality].every((interval, i) => {
+								return interval === intervals[i][1];
+							})
+						) {
+							return "quality: " + quality + " inversion: " + options[i];
 						}
 					}
 				}
 			}
 
 			//////////////////////////////////////////////////////////////////////
-			// 													   7th chords 
+			// 													   7th chords
 			// example input: ["major third", "minor third", "minor third"] => "7"
 			//////////////////////////////////////////////////////////////////////
-			if ( intervals.length === 3 ) {
-				let options = ["root position", "first inversion", "second inversion", "third inversion"];
-				for ( var i = 0; i < options.length; i++ ) {
+			if (intervals.length === 3) {
+				let options = [
+					"root position",
+					"first inversion",
+					"second inversion",
+					"third inversion"
+				];
+				for (var i = 0; i < options.length; i++) {
 					var obj = seventhChords[options[i]];
-					for ( var quality in obj ) {
-						if ( obj[quality].every((interval, i) => {return interval === intervals[i][1]})) {
-							return 'quality: ' + quality + ' inversion: ' + options[i];
+					for (var quality in obj) {
+						if (
+							obj[quality].every((interval, i) => {
+								return interval === intervals[i][1];
+							})
+						) {
+							return "quality: " + quality + " inversion: " + options[i];
 						}
 					}
 				}
 			}
 		}
-		return 'not sure';
+		return "not sure";
 	}
 
 	getInterval(x, y) {
@@ -136,8 +150,8 @@ class IntervalDisplay extends React.Component {
 		return this.getAllIntervals() === null ? (
 			<div className="intervalDisplay">
 				<h3>Add and select notes to see the intervals between them.</h3>
-			</div>)
-		 : (
+			</div>
+		) : (
 			<div className="intervalDisplay">
 				<h3>The intervals in your selection are: </h3>
 				<ul>
@@ -145,13 +159,12 @@ class IntervalDisplay extends React.Component {
 						<li key={i}>{interval}</li>
 					))}
 				</ul>
-				{this.state.chord ? 
+				{this.state.chord ? (
 					<div>
 						<h3>The chord in your selection is: </h3>
 						<p>{this.state.chord}</p>
 					</div>
-					: null
-				}
+				) : null}
 			</div>
 		);
 	}

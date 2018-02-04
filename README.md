@@ -1,19 +1,37 @@
-Solo Week Project
+Ethan's Chord Builder
 ---
-Welcome to my solo week project! This is a music notation tool that my music students can use to practice learning their intervals and chords.
+A simple front-end application for students of music theory, this tool allows users to add notes to a grand staff, select and move notes around, examine the relationships between notes, and listen to the chords they've created.
+
+#### How it works
+When the user clicks on a line or space, ![a note is appended to that div](./addNotes.gif)
+When notes are selected, they can be ![moved around using the arrow keys](./selectMove.gif)
+When multiple notes are selected, you can see the intervals between the notes, and where applicable, the quality and inversion of the chord corresponding to those notes.
+
+#### A note about styling
+I challenged myself to style this app with raw CSS. The result is imperfect, but I learned a ton about CSS in the process. There are many kinks left to be worked out.  In its current state, the app looks best in fullscreen mode.
+
+Built With
+---
+[React](https://github.com/facebook/react)
+
+[jQuery](https://github.com/jquery/jquery)
+
+[webpack](https://github.com/webpack/webpack)
+
+[webAudioDAW](https://github.com/rserota/wad)
 
 Setup
 ---
 ```
 npm install
 ```
-Compile
+---
+Compile & Start
 ---
 ```
-npm run react-dev
+npm run react-dev && npm run server-dev
 ```
-Usage
 ---
-```
-npm run server-dev
-```
+Demo
+---
+See a live demo at __placeholder.com__

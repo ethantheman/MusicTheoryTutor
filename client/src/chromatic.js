@@ -1,16 +1,17 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // This file sets up the chromatic scale which will be used to display the notes on the staff.
-// In the chromatic array, the values in each tuple represent enharmonic options spellings of each note.
+// In the chromatic array, the values in each tuple represent enharmonic spellings of each note.
 // Use tuple[0] for ascending context and use tuple[1] for descending context. I have decided to leave
-// out Fb and Cb as a stylistic choice, opting for enharmonic spellings E and B.
+// out Fb and Cb as a stylistic choice, opting instead for enharmonic spellings E and B.
 //
 // Each index in the intervals array represents one half step, (i.e. one step on the chromatic scale).
 // the number of half steps between any two notes determines the interval between those two notes.
-// 
+//
 // This file also sets up the intervals between notes in the chromatic scale, and uses those intervals
-// to establish the sets of intervals used to determine chord qualities in each possible inversion of 
-// triads, 7th chords, and beyond.
+// to establish the sets of intervals used to determine chord qualities in each possible inversion of
+// triads, 7th chords, and beyond. The chord analyzer currently works for triads and seventh chords
+// where all the notes in the chord are contained within a single octave.
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const chromatic = [
@@ -79,63 +80,60 @@ const triads = {
 	// of triad in each possible inversion.
 
 	"root position": {
-		"major": ["Major 3rd", "minor 3rd"],
-		"minor": ["minor 3rd", "Major 3rd"],
-		"augmented": ["Major 3rd", "Major 3rd"],
-		"diminished": ["minor 3rd", "minor 3rd"]
+		major: ["Major 3rd", "minor 3rd"],
+		minor: ["minor 3rd", "Major 3rd"],
+		augmented: ["Major 3rd", "Major 3rd"],
+		diminished: ["minor 3rd", "minor 3rd"]
 	},
 
 	"first inversion": {
-		"major": ["minor 3rd", "Perfect 4th"],
-		"minor": ["Major 3rd", "Perfect 4th"],
-		"augmented": ["Major 3rd", "Major 3rd"],
-		"diminished": ["minor 3rd", "tritone"]
+		major: ["minor 3rd", "Perfect 4th"],
+		minor: ["Major 3rd", "Perfect 4th"],
+		augmented: ["Major 3rd", "Major 3rd"],
+		diminished: ["minor 3rd", "tritone"]
 	},
 
 	"second inversion": {
-		"major": ["Perfect 4th", "Major 3rd"],
-		"minor": ["Perfect 4th", "minor 3rd"],
-		"augmented": ["Major 3rd", "Major 3rd"],
-		"diminished": ["tritone", "minor 3rd"]
+		major: ["Perfect 4th", "Major 3rd"],
+		minor: ["Perfect 4th", "minor 3rd"],
+		augmented: ["Major 3rd", "Major 3rd"],
+		diminished: ["tritone", "minor 3rd"]
 	}
-
-}
+};
 
 const seventhChords = {
 	"root position": {
-		"major": ["Major 3rd", "minor 3rd", "Major 3rd"],
-		"dominant": ["Major 3rd", "minor 3rd", "minor 3rd"],
-		"minor": ["minor 3rd", "Major 3rd", "minor 3rd"],
+		major: ["Major 3rd", "minor 3rd", "Major 3rd"],
+		dominant: ["Major 3rd", "minor 3rd", "minor 3rd"],
+		minor: ["minor 3rd", "Major 3rd", "minor 3rd"],
 		"half-diminished": ["minor 3rd", "minor 3rd", "Major 3rd"],
-		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+		diminished: ["minor 3rd", "minor 3rd", "minor 3rd"]
 	},
 
 	"first inversion": {
-		"major": ["minor 3rd", "Major 3rd", "minor 2nd"],
-		"dominant": ["minor 3rd", "minor 3rd", "Major 2nd"],
-		"minor": ["Major 3rd", "minor 3rd", "Major 2nd"],
+		major: ["minor 3rd", "Major 3rd", "minor 2nd"],
+		dominant: ["minor 3rd", "minor 3rd", "Major 2nd"],
+		minor: ["Major 3rd", "minor 3rd", "Major 2nd"],
 		"half-diminished": ["minor 3rd", "Major 3rd", "Major 2nd"],
-		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+		diminished: ["minor 3rd", "minor 3rd", "minor 3rd"]
 	},
 
 	"second inversion": {
-		"major": ["Major 3rd", "minor 2nd", "Major 3rd"],
-		"dominant": ["minor 3rd", "Major 2nd", "Major 3rd"],
-		"minor": ["minor 3rd", "Major 2nd", "minor 3rd"],
+		major: ["Major 3rd", "minor 2nd", "Major 3rd"],
+		dominant: ["minor 3rd", "Major 2nd", "Major 3rd"],
+		minor: ["minor 3rd", "Major 2nd", "minor 3rd"],
 		"half-diminished": ["Major 3rd", "Major 2nd", "minor 3rd"],
-		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+		diminished: ["minor 3rd", "minor 3rd", "minor 3rd"]
 	},
 
 	"third inversion": {
-		"major": ["minor 2nd", "Major 3rd", "minor 3rd"],
-		"dominant": ["Major 2nd", "Major 3rd", "minor 3rd"],
-		"minor": ["Major 2nd", "minor 3rd", "Major 3rd"],
+		major: ["minor 2nd", "Major 3rd", "minor 3rd"],
+		dominant: ["Major 2nd", "Major 3rd", "minor 3rd"],
+		minor: ["Major 2nd", "minor 3rd", "Major 3rd"],
 		"half-diminished": ["Major 2nd", "minor 3rd", "minor 3rd"],
-		"diminished": ["minor 3rd", "minor 3rd", "minor 3rd"]
+		diminished: ["minor 3rd", "minor 3rd", "minor 3rd"]
 	}
-}
-
-
+};
 
 module.exports.chromatic = chromatic;
 module.exports.intervals = intervals;

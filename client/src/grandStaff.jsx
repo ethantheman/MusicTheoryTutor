@@ -155,7 +155,10 @@ class GrandStaff extends React.Component {
 				chord.push(obj.name);
 			}
 		});
-		let c = new Wad({ source: "sine" });
+		let c = new Wad.Poly();
+		let sine = new Wad({source: "sine"})
+		let sawtooth = new Wad({ source: "sawtooth" });
+		c.add(sine).add(sawtooth);
 		chord.forEach(note => {
 			c.play({ volume: 0.5, pitch: note });
 		});
@@ -205,7 +208,7 @@ class GrandStaff extends React.Component {
 	render() {
 		console.log('notes: ', this.state.notes);
 		return (
-			<div>
+			<div id="staffContainer">
 				{/*<ChordList chords={this.props.chords} changeChord={this.changeChord} />*/}
 				{/*<div id="saveButtonContainer">
 						{this.state.notesToDisplay.length === 0 ? null 
@@ -214,8 +217,10 @@ class GrandStaff extends React.Component {
 									<button id="saveButton" onClick={this.saveChord}>Save This Chord</button>
 								</div>}
 				</div>*/}
-				<div>
+				<div id="trebleContainer" >
 					<img src="images/treble.png" className="trebleClef" />
+				</div>
+				<div id="bassContainer">
 					<img src="images/Bass.png" className="bassClef" />
 				</div>
 				<div>
