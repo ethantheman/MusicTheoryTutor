@@ -34,4 +34,4 @@ npm run react-dev && npm run server-dev
 ---
 Demo
 ---
-See a live demo at __placeholder.com__
+See a live demo at __https://music-theory-tutor.firebaseapp.com/__

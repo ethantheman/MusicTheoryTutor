@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Note from "./Note.jsx";
 import NoteNameDisplay from "./NoteNameDisplay.jsx";
 import IntervalDisplay from "./IntervalDisplay.jsx";
-import ChordList from './ChordList.jsx';
+import ChordList from "./ChordList.jsx";
 import $ from "jquery";
 var Wad = require("web-audio-daw");
 var chromatic = require("./chromatic.js").chromatic;
@@ -26,7 +26,6 @@ class GrandStaff extends React.Component {
 		this.saveChord = this.saveChord.bind(this);
 		// this.changeChord = this.changeChord.bind(this);
 	}
-
 
 	addNote(e) {
 		let newNote = { name: e.target.id.toUpperCase(), deleted: false };
@@ -70,7 +69,7 @@ class GrandStaff extends React.Component {
 	// 	});
 	// 	// console.log('changing chord to: ', name);
 	// }
-	
+
 	changeNote(oldNote, newNote, index) {
 		// this function updates the note at parameter index.
 		let n = this.state.notes;
@@ -94,10 +93,9 @@ class GrandStaff extends React.Component {
 			// add note to set of selected notes
 			let s = this.state.selectedNotes;
 			s.push(index);
-			this.setState(
-				{
-					selectedNotes: s
-				});
+			this.setState({
+				selectedNotes: s
+			});
 		} else {
 			// remove note from set of selected notes
 			let s = this.state.selectedNotes;
@@ -105,13 +103,12 @@ class GrandStaff extends React.Component {
 			s.forEach(el => {
 				el === index ? null : x.push(el);
 			});
-			this.setState(
-				{
-					selectedNotes: x
-				});
+			this.setState({
+				selectedNotes: x
+			});
 		}
 	}
-	
+
 	deleteNote(index) {
 		// flip deleted flag on note at index
 		let n = this.state.notes;
@@ -132,7 +129,10 @@ class GrandStaff extends React.Component {
 						this.state.selectedNotes.indexOf(index),
 						1
 					);
-					this.setState({ selectedNotes: this.state.selectedNotes, notesToDisplay: this.getNotesToDisplay() });
+					this.setState({
+						selectedNotes: this.state.selectedNotes,
+						notesToDisplay: this.getNotesToDisplay()
+					});
 				}
 			);
 		}
@@ -142,10 +142,9 @@ class GrandStaff extends React.Component {
 		let result = this.state.notes
 			.filter(note => note.deleted === false)
 			.map(obj => obj.name);
-		console.log('notes to display: ', result);
+		console.log("notes to display: ", result);
 		return result;
 	}
-
 
 	playChord() {
 		// use the web audio daw to play all the notes on the staff.
@@ -156,7 +155,7 @@ class GrandStaff extends React.Component {
 			}
 		});
 		let c = new Wad.Poly();
-		let sine = new Wad({source: "sine"})
+		let sine = new Wad({ source: "sine" });
 		let sawtooth = new Wad({ source: "sawtooth" });
 		c.add(sine).add(sawtooth);
 		chord.forEach(note => {
@@ -166,8 +165,8 @@ class GrandStaff extends React.Component {
 
 	saveChord() {
 		let chord = this.state.notesToDisplay;
-		let name = $('#chordName').val();
-		this.props.saveChord({name: name, notes: chord});
+		let name = $("#chordName").val();
+		this.props.saveChord({ name: name, notes: chord });
 	}
 
 	sortAscendingNotes(arr) {
@@ -202,11 +201,8 @@ class GrandStaff extends React.Component {
 		});
 	}
 
-
-
-
 	render() {
-		console.log('notes: ', this.state.notes);
+		console.log("notes: ", this.state.notes);
 		return (
 			<div id="staffContainer">
 				{/*<ChordList chords={this.props.chords} changeChord={this.changeChord} />*/}
@@ -217,7 +213,7 @@ class GrandStaff extends React.Component {
 									<button id="saveButton" onClick={this.saveChord}>Save This Chord</button>
 								</div>}
 				</div>*/}
-				<div id="trebleContainer" >
+				<div id="trebleContainer">
 					<img src="images/treble.png" className="trebleClef" />
 				</div>
 				<div id="bassContainer">
@@ -263,22 +259,31 @@ class GrandStaff extends React.Component {
 					<div className="ledger-line" id="e2" onClick={this.addNote} />
 				</div>
 				<div id="displayContainer">
-					{this.state.notesToDisplay.length === 0 ? <div id="noteNameDisplayContainer"><h3>Add notes by clicking on the lines and spaces above. <br/> Selected notes can be moved up and down with the arrow keys, or deleted with the delete key.</h3></div> :
-					<div id="noteNameDisplayContainer">
-						{this.sortAscendingNotes(this.state.notesToDisplay).map(
-							(name, i) => {
-								return (
-									<NoteNameDisplay
-										name={name}
-										key={i}
-										selectedNotes={this.state.selectedNotes}
-										notes={this.state.notes}
-										addToInterval={this.addNoteToInterval}
-									/>
-								);
-							}
-						)}
-					</div>}
+					{this.state.notesToDisplay.length === 0 ? (
+						<div id="noteNameDisplayContainer">
+							<h3>
+								Add notes by clicking on the lines and spaces above. <br />{" "}
+								Selected notes can be moved up and down with the arrow keys, or
+								deleted with the delete key.
+							</h3>
+						</div>
+					) : (
+						<div id="noteNameDisplayContainer">
+							{this.sortAscendingNotes(this.state.notesToDisplay).map(
+								(name, i) => {
+									return (
+										<NoteNameDisplay
+											name={name}
+											key={i}
+											selectedNotes={this.state.selectedNotes}
+											notes={this.state.notes}
+											addToInterval={this.addNoteToInterval}
+										/>
+									);
+								}
+							)}
+						</div>
+					)}
 					<div id="intervalDisplayContainer">
 						<IntervalDisplay
 							selectedNotes={this.state.selectedNotes}
