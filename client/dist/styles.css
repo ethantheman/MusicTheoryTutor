@@ -39,9 +39,9 @@
 
 #trebleContainer {
 	width: 10%;
-	height: 200px;
+	height: 30%;
 	left: 1%;
-	top: 120px;
+	top: 9.5vh;
 	position: fixed;
 	z-index: 2;
 }
@@ -52,15 +52,16 @@
 
 #bassContainer {
 	width: 10%;
-	height: 150px;
+	height: 200px;
 	left: 1%;
-	top: 355px;
+	top: 50vh;
 	position: fixed;
 	z-index: 2;
 }
 
 .bassClef {
 	height: 100%;
+	width: 50%;
 }
 
 .note {

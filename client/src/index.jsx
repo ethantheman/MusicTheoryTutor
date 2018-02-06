@@ -72,7 +72,6 @@ class App extends React.Component {
 				<div>
 					<h1 id="title">Ethan's Chord Builder</h1>
 				</div>
-				<br />
 				<GrandStaff saveChord={this.saveChord} chords={this.state.chords} />
 			</div>
 		);

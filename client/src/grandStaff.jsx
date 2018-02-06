@@ -213,12 +213,12 @@ class GrandStaff extends React.Component {
 									<button id="saveButton" onClick={this.saveChord}>Save This Chord</button>
 								</div>}
 				</div>*/}
-				<div id="trebleContainer">
-					<img src="images/treble.png" className="trebleClef" />
-				</div>
-				<div id="bassContainer">
-					<img src="images/Bass.png" className="bassClef" />
-				</div>
+				{/*<div id="trebleContainer">
+									<img src="images/treble.png" className="trebleClef" />
+								</div>
+								<div id="bassContainer">
+									<img src="images/Bass.png" className="bassClef" />
+								</div>*/}
 				<div>
 					{this.state.notes.map((note, i) => {
 						return (
