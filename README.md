@@ -1,10 +1,10 @@
 Ethan's Chord Builder
 ---
-A simple front-end application for students of music theory, this tool allows users to add notes to a grand staff, select and move notes around, examine the relationships between notes, and listen to the chords they've created.
+A simple browser-based front-end application for students of music theory, this tool allows users to add notes to a grand staff, select and move notes around, examine the relationships between notes, and listen to the chords they've created.
 
 #### How it works
 When the user clicks on a line or space, a note is appended to a corresponding div.![a note is appended to a corresponding div.](./addNotes.gif)
-When notes are selected, they can be moved around using the arrow keys.![moved around using the arrow keys.](./selectMove.gif)
+When notes are selected, they can be moved around using the arrow keys (since this application relies heavily on keyboard events, it can't currently be used on mobile devices).![moved around using the arrow keys.](./selectMove.gif)
 When multiple notes are selected, you can see the intervals between the notes, and where applicable, the quality and inversion of the chord corresponding to those notes.
 
 #### A note about styling
