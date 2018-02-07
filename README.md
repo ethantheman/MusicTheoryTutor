@@ -8,7 +8,7 @@ When notes are selected, they can be moved around using the arrow keys.![moved a
 When multiple notes are selected, you can see the intervals between the notes, and where applicable, the quality and inversion of the chord corresponding to those notes.
 
 #### A note about styling
-I challenged myself to style this app with raw CSS. The result is imperfect, but I learned a ton about CSS in the process. There are many kinks left to be worked out.  In its current state, the app looks best in fullscreen mode.
+I challenged myself to style this app with raw CSS. The result is imperfect, but I learned a ton about CSS in the process. There are many kinks left to be worked out.
 
 Built With
 ---
@@ -26,10 +26,16 @@ Setup
 npm install
 ```
 ---
-Compile & Start
+Compile
 ---
 ```
-npm run react-dev && npm run server-dev
+npm run react-dev
+```
+---
+Start
+---
+```
+npm run server-dev
 ```
 ---
 Demo
